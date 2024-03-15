@@ -43,14 +43,15 @@
             <?php foreach ($tikets as $tiket) : 
               if ($tiket['id'] == 12){
               ?>
-              <div class="item">
+              <div class="item" id="item_<?=$tiket['id']?>">
+              <div id="aharga_<?= $tiket['id'] ?>" style="display:none;"><?= $tiket['harga_reg'] ?></div>
                 <h2>
                   <i class="material-icons" style="font-size: 28px; margin-right: 10px; color: #333">disabled_by_default</i
-                  ><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 12px"><?= $tiket['name'] ?> - <span id="hrgtiket"><?= $tiket['harga_reg'] ?></span></span>
+                  ><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 12px"><?= $tiket['name'] ?> - <span id="hargaTkt"><?= number_format($tiket['harga_reg'], 0, ',', '.'); ?></span></span>
                 </h2>
                 <div class="right" style="width: 80px">
                   <button onclick="decrement()" class="buttonNbr" style="text-align: center"><i class="material-icons" style="font-size: 20px; margin-left: -10px">arrow_left</i></button>
-                  <h2 id="counting" style="min-height: 20px; font-size: 14px; min-width: 25px; text-align: center">1</h2>
+                  <h2 id="counting_<?= $tiket['id'] ?>" style="min-height: 20px; font-size: 14px; min-width: 25px; text-align: center">1</h2>
                   <button onclick="increment()" class="buttonNbr" style="text-align: center"><i class="material-icons" style="font-size: 20px; margin-left: -10px">arrow_right</i></button>
                 </div>
               </div>
@@ -73,25 +74,12 @@
             </span>
             <div class="form-group label-floating" style="width: 80%">
               <label class="control-label" style="color: #000">Total bayar </label>
-              <label id="ttl" type="number" class="form-control" style="color: #0a2880 !important; font-size: 20px; text-align: right; font-weight: bold"></label>
+              <label id="ttlThis" type="number" class="form-control" style="color: #0a2880 !important; font-size: 20px; text-align: right; font-weight: bold"></label>
             </div>
           </div>
-          <!--
-         <div class="list radius white" style="border:0px;margin-bottom:10px;">
-          <div class="item" style="padding:5px 15px;" onclick="openPage('paket');">
-          <div class="left">
-          <i class="material-icons" style="font-size:20px;">account_balance</i>
-          </div>
-          <div style="border-bottom:1px #ccc solid;font-size:14px;color:#000;padding-bottom:15px;width:100%;">Paket</div>
-          <div class="right" style="padding-bottom:15px;">
-          <span id="ketpaket" style="padding-right:10px;font-size:14px;color:#bf071c;">Reguler</span> <i class="icon ion-ios-arrow-right" ></i>
-          </div>
-          </div>
-        </div>	
-    -->
   
           <div class="list radius white" style="border: 0px; margin-bottom: 10px">
-            <div class="item" style="padding: 5px 15px" onclick="openPage('paytype');">
+            <div class="paytype" style="padding: 5px 15px" onclick="openPage('paytype');">
               <div class="left">
                 <i class="material-icons" style="font-size: 20px">account_balance</i>
               </div>
@@ -177,7 +165,7 @@
     cst += '<div id="aharga_' + tiket_id + '" style="display:none;">' + harga + '</div>';
     cst += '';
     cst += '<h2 style="font-size:14px;"><i onclick="removeWahanaThis(' + "'" + 'item_' + tiket_id + "','" + tiket_id + "'" + ');" class="material-icons" style="font-size:28px;margin-right:10px;color:red;">disabled_by_default</i><span id="ket_' + tiket_id + '" style="vertical-align: top;heigh:20px;padding-top:5px;font-size:12px;">' + nama + '</span> - ';
-    cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px;" id="harga_' + tiket_id + '" >' + harga + '</span></h2>';
+    cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px;" id="harga_' + tiket_id + '" >' + parseFloat(harga).toLocaleString('id-ID') + '</span></h2>';
     cst += '<div class="right" style="width:80px;">';
     cst += '<button onclick="decrementThis(' + "'" + tiket_id + "'" + ')" class="buttonNbr" style="text-align:center;"><i class="material-icons" style="font-size:20px;margin-left:-10px;">arrow_left</i></button>';
     cst += '<h2 id="counting_' + tiket_id + '" style="min-height:20px;font-size:14px;min-width:25px;text-align:center;">1</h2>';
@@ -192,13 +180,15 @@
         rowToRemove.remove();
     }
 
-    
+    RefreshTotal();
   }
 
   function incrementThis(tiket_id) {
     var countingElement = document.getElementById('counting_' + tiket_id);
     var currentCount = parseInt(countingElement.innerText);
     countingElement.innerText = currentCount + 1;
+
+    RefreshTotal();
   }
 
   function decrementThis(tiket_id) {
@@ -207,6 +197,8 @@
     if (currentCount > 1) {
       countingElement.innerText = currentCount - 1;
     }
+
+    RefreshTotal();
   }
 
   function removeWahanaThis(item_id, tiket_id) {
@@ -233,6 +225,24 @@
     if (itemToRemove) {
       itemToRemove.remove();
     }
+
+    RefreshTotal();
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    RefreshTotal(); // Jalankan RefreshTotal saat halaman telah dimuat
+  });
+
+  function RefreshTotal() {
+    var totalBayar = 0;
+    $('.item').each(function() {
+      var item_id = $(this).attr('id').split('_')[1];
+      var harga = $('#aharga_' + item_id).text();
+      var jumlah = $('#counting_' + item_id).text();
+      totalBayar += parseInt(harga) * parseInt(jumlah);
+    });
+    
+    $('#ttlThis').text(parseFloat(totalBayar).toLocaleString('id-ID'));
   }
 
 </script>
