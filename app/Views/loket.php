@@ -40,18 +40,18 @@
           </div>
   
           <div id="keranjang" class="list radius white">
-            <?php foreach ($tikets as $tiket) : 
-              if ($tiket['id'] == 12){
+            <?php foreach ($wahanas as $wahana) : 
+              if ($wahana['id'] == 12){
               ?>
-              <div class="item" id="item_<?=$tiket['id']?>">
-              <div id="aharga_<?= $tiket['id'] ?>" style="display:none;"><?= $tiket['harga_reg'] ?></div>
+              <div class="item" id="item_<?=$wahana['id']?>">
+              <div id="aharga_<?= $wahana['id'] ?>" style="display:none;"><?= $wahana['harga_reg'] ?></div>
                 <h2>
                   <i class="material-icons" style="font-size: 28px; margin-right: 10px; color: #333">disabled_by_default</i
-                  ><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 12px"><?= $tiket['name'] ?> - <span id="hargaTkt"><?= number_format($tiket['harga_reg'], 0, ',', '.'); ?></span></span>
+                  ><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 12px"><?= $wahana['name'] ?> - <span id="hargaTkt"><?= number_format($wahana['harga_reg'], 0, ',', '.'); ?></span></span>
                 </h2>
                 <div class="right" style="width: 80px">
                   <button onclick="decrement()" class="buttonNbr" style="text-align: center"><i class="material-icons" style="font-size: 20px; margin-left: -10px">arrow_left</i></button>
-                  <h2 id="counting_<?= $tiket['id'] ?>" style="min-height: 20px; font-size: 14px; min-width: 25px; text-align: center">1</h2>
+                  <h2 id="counting_<?= $wahana['id'] ?>" style="min-height: 20px; font-size: 14px; min-width: 25px; text-align: center">1</h2>
                   <button onclick="increment()" class="buttonNbr" style="text-align: center"><i class="material-icons" style="font-size: 20px; margin-left: -10px">arrow_right</i></button>
                 </div>
               </div>
@@ -76,15 +76,23 @@
               <label class="control-label" style="color: #000">Total bayar </label>
               <label id="ttlThis" type="number" class="form-control" style="color: #0a2880 !important; font-size: 20px; text-align: right; font-weight: bold"></label>
             </div>
+            <div id="totalHarga" style="display:none;"></div>
           </div>
   
-          <div class="list radius white" style="border: 0px; margin-bottom: 10px">
-            <div class="paytype" style="padding: 5px 15px" onclick="openPage('paytype');">
+          <div class="list radius white" style="border: 0px; margin-bottom: 10px; width:83%">
+            <div class="paytype" style="padding: 5px 15px">
               <div class="left">
                 <i class="material-icons" style="font-size: 20px">account_balance</i>
               </div>
               <div style="border-bottom: 1px #ccc solid; font-size: 14px; color: #000; padding-bottom: 15px; width: 100%">Payment Type</div>
-              <div class="right" style="padding-bottom: 15px"><span id="ketbayar" style="padding-right: 10px; font-size: 14px; color: #bf071c">Tunai</span> <i class="icon ion-ios-arrow-right"></i></div>
+              <div class="right" style="padding-bottom: 15px">
+              <select id="paymentType" style="font-size: 24px;">
+                <option value="Tunai">Tunai</option>
+                <option value="Kartu Debit">Kartu Debit</option>
+                <option value="Kartu Kredit">Kartu Kredit</option>
+                <option value="QRIS">QRIS</option>
+              </select>
+            </div>
             </div>
           </div>
   
@@ -107,7 +115,7 @@
             </div>
           </div>
           <div id="loader" class="loader" style="display: none; margin: 10px auto; width: 40px; height: 40px"></div>
-          <div onClick="rekamData();" style="margin: 20px auto; width: 55%; padding: 7px; background-color: #259e73; color: #fff; border-radius: 18px; height: 35px; text-align: center; font-weight: bold">Submit</div>
+          <div onClick="submitThis();" style="margin: 20px auto; width: 55%; padding: 7px; background-color: #259e73; color: #fff; border-radius: 18px; height: 35px; text-align: center; font-weight: bold">Submit</div>
         </div>
       </div>
       <div style="min-height: 200px"></div>
@@ -134,14 +142,14 @@
               </tr>
           </thead>
           <tbody>
-          <?php foreach ($tikets as $tiket) : 
-            if ($tiket['id'] != 12){
+          <?php foreach ($wahanas as $wahana) : 
+            if ($wahana['id'] != 12){
             ?>
-              <tr id="row_<?= $tiket['id']; ?>">
-                  <td class="align-middle text-center"><?= $tiket['name']; ?></td>
-                  <td class="align-middle text-center"><?= $tiket['harga_reg']; ?></td>
+              <tr id="row_<?= $wahana['id']; ?>">
+                  <td class="align-middle text-center"><?= $wahana['name']; ?></td>
+                  <td class="align-middle text-center"><?= $wahana['harga_reg']; ?></td>
                   <td class="align-middle text-center">
-                      <button onclick="addWahanaThis('<?= $tiket['id']; ?>' , '<?= $tiket['name']; ?>' , '<?= $tiket['harga_reg']; ?>' )" class="btn btn-primary">Pilih</button>
+                      <button onclick="addWahanaThis('<?= $wahana['id']; ?>' , '<?= $wahana['name']; ?>' , '<?= $wahana['harga_reg']; ?>' )" class="btn btn-primary">Pilih</button>
                   </td>
               </tr>
           <?php 
@@ -204,7 +212,7 @@
   function removeWahanaThis(item_id, tiket_id) {
     // Kembalikan item ke dalam tabel modal
     var nama = document.getElementById('ket_' + tiket_id).innerText;
-    var harga = document.getElementById('harga_' + tiket_id).innerText;
+    var harga = document.getElementById('aharga_' + tiket_id).innerText;
 
     var newRow = document.createElement('tr');
     newRow.id = 'row_' + tiket_id;
@@ -243,7 +251,59 @@
     });
     
     $('#ttlThis').text(parseFloat(totalBayar).toLocaleString('id-ID'));
+    $('#totalHarga').text(totalBayar);
   }
+
+  function submitThis() {
+    var rfidtiket = $('#rfidtiket').val(); // Ambil nilai dari textarea
+    var totalBayar = $('#totalHarga').text(); // Ambil total bayar dari div totalHarga
+    var paymentType = $('#paymentType').val(); // Ambil jenis pembayaran dari select paymentType
+    var refno = $('#refno').val(); // Ambil nomor referensi dari input refno
+    var phone = $('#phone').val(); // Ambil nomor telepon dari input phone
+
+    var wahana = [];
+    $('.item').each(function() {
+      var item_id = $(this).attr('id').split('_')[1];
+      var harga = $('#aharga_' + item_id).text();
+      var jumlah = $('#counting_' + item_id).text();
+      wahana.push({ item_id: item_id, harga: harga, jumlah: jumlah });
+    });
+
+    // Objek data yang akan dikirim melalui POST
+    var postData = {
+      rfidtiket: rfidtiket,
+      totalBayar: totalBayar,
+      paymentType: paymentType,
+      refno: refno,
+      phone: phone,
+      wahana: wahana // Array wahana yang telah dibuat sebelumnya
+    };
+
+    // Kirim data ke endpoint submitTransaksi dengan metode POST
+    $.post("<?= base_url('submitTransaksi') ?>", postData)
+      .done(function(response) {
+        // Handle respons dari server jika diperlukan
+        console.log(response);
+        customAlert('Transaksi berhasil dikirim!');
+      })
+      .fail(function(error) {
+        // Handle kesalahan jika ada
+        console.error(error);
+        alert('Terjadi kesalahan saat mengirim transaksi.');
+      });
+  }
+
+  function customAlert(message) {
+    swal({
+      title: "Transaksi Sukses",
+      text: message,
+      icon: "success",
+      button: "OK",
+    }).then(function() {
+      location.reload(); // Reload halaman setelah klik OK
+    });
+  }
+
 
 </script>
 

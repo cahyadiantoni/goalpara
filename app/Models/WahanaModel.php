@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class TiketModel extends Model
+class WahanaModel extends Model
 {
-    protected $table = 'tikets'; // Nama tabel yang digunakan oleh model
+    protected $table = 'wahana'; // Nama tabel yang digunakan oleh model
 
     protected $primaryKey = 'id'; // Nama primary key pada tabel
 

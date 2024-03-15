@@ -24,6 +24,10 @@
 		<link href="<?= base_url() ?>assets/css/calendar.css"/>
 		<link rel="stylesheet" href="<?= base_url() ?>assets/css/chartist.min.css">
 		<link rel="stylesheet" href="<?= base_url() ?>assets/css/main.css">
+
+        <!-- Load SweetAlert CSS dan JavaScript -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
  
         <title>Goalpara</title>
 	</head>
