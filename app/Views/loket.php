@@ -40,21 +40,32 @@
           </div>
   
           <div id="keranjang" class="list radius white">
-            <div class="item">
-              <h2>
-                <i class="material-icons" style="font-size: 28px; margin-right: 10px; color: #333">disabled_by_default</i
-                ><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 12px">Tiket Masuk - <span id="hrgtiket"></span></span>
-              </h2>
-              <div class="right" style="width: 80px">
-                <button onclick="decrement()" class="buttonNbr" style="text-align: center"><i class="material-icons" style="font-size: 20px; margin-left: -10px">arrow_left</i></button>
-                <h2 id="counting" style="min-height: 20px; font-size: 14px; min-width: 25px; text-align: center">1</h2>
-                <button onclick="increment()" class="buttonNbr" style="text-align: center"><i class="material-icons" style="font-size: 20px; margin-left: -10px">arrow_right</i></button>
+            <?php foreach ($tikets as $tiket) : 
+              if ($tiket['id'] == 12){
+              ?>
+              <div class="item">
+                <h2>
+                  <i class="material-icons" style="font-size: 28px; margin-right: 10px; color: #333">disabled_by_default</i
+                  ><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 12px"><?= $tiket['name'] ?> - <span id="hrgtiket"><?= $tiket['harga_reg'] ?></span></span>
+                </h2>
+                <div class="right" style="width: 80px">
+                  <button onclick="decrement()" class="buttonNbr" style="text-align: center"><i class="material-icons" style="font-size: 20px; margin-left: -10px">arrow_left</i></button>
+                  <h2 id="counting" style="min-height: 20px; font-size: 14px; min-width: 25px; text-align: center">1</h2>
+                  <button onclick="increment()" class="buttonNbr" style="text-align: center"><i class="material-icons" style="font-size: 20px; margin-left: -10px">arrow_right</i></button>
+                </div>
               </div>
-            </div>
+            <?php 
+              }
+            endforeach; ?>
           </div>
+
           <div style="width: 100%; text-align: center">
-            <i class="material-icons" onclick="openWahana(1);" style="font-size: 38px; margin-left: 10px">add</i>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="material-icons" style="font-size: 24px">add</i>
+              Tambah Wahana
+            </button>
           </div>
+
   
           <div class="input-group" style="flex-wrap: nowrap !important">
             <span class="input-group-addon">
@@ -116,5 +127,115 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pilihan Wahana</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <table class="table">
+          <thead>
+              <tr>
+                  <th class="text-center">Nama Tiket</th>
+                  <th class="text-center">Harga Reguler</th>
+                  <th class="text-center">Action</th>
+              </tr>
+          </thead>
+          <tbody>
+          <?php foreach ($tikets as $tiket) : 
+            if ($tiket['id'] != 12){
+            ?>
+              <tr id="row_<?= $tiket['id']; ?>">
+                  <td class="align-middle text-center"><?= $tiket['name']; ?></td>
+                  <td class="align-middle text-center"><?= $tiket['harga_reg']; ?></td>
+                  <td class="align-middle text-center">
+                      <button onclick="addWahanaThis('<?= $tiket['id']; ?>' , '<?= $tiket['name']; ?>' , '<?= $tiket['harga_reg']; ?>' )" class="btn btn-primary">Pilih</button>
+                  </td>
+              </tr>
+          <?php 
+            }
+          endforeach; ?>
+          </tbody>
+      </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function addWahanaThis(tiket_id, nama, harga) {
+    var cst = '<div class="item" id="item_' + tiket_id + '">';
+    cst += '<div id="aharga_' + tiket_id + '" style="display:none;">' + harga + '</div>';
+    cst += '';
+    cst += '<h2 style="font-size:14px;"><i onclick="removeWahanaThis(' + "'" + 'item_' + tiket_id + "','" + tiket_id + "'" + ');" class="material-icons" style="font-size:28px;margin-right:10px;color:red;">disabled_by_default</i><span id="ket_' + tiket_id + '" style="vertical-align: top;heigh:20px;padding-top:5px;font-size:12px;">' + nama + '</span> - ';
+    cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px;" id="harga_' + tiket_id + '" >' + harga + '</span></h2>';
+    cst += '<div class="right" style="width:80px;">';
+    cst += '<button onclick="decrementThis(' + "'" + tiket_id + "'" + ')" class="buttonNbr" style="text-align:center;"><i class="material-icons" style="font-size:20px;margin-left:-10px;">arrow_left</i></button>';
+    cst += '<h2 id="counting_' + tiket_id + '" style="min-height:20px;font-size:14px;min-width:25px;text-align:center;">1</h2>';
+    cst += '<button onclick="incrementThis(' + "'" + tiket_id + "'" + ')" class="buttonNbr" style="text-align:center;"><i class="material-icons" style="font-size:20px;margin-left:-10px;">arrow_right</i></button> ';
+    cst += '</div>';
+    cst += '</div>';
+    $(cst).appendTo('#keranjang');
+
+    // Hapus baris dari tabel modal
+    var rowToRemove = document.getElementById('row_' + tiket_id);
+    if (rowToRemove) {
+        rowToRemove.remove();
+    }
+
+    
+  }
+
+  function incrementThis(tiket_id) {
+    var countingElement = document.getElementById('counting_' + tiket_id);
+    var currentCount = parseInt(countingElement.innerText);
+    countingElement.innerText = currentCount + 1;
+  }
+
+  function decrementThis(tiket_id) {
+    var countingElement = document.getElementById('counting_' + tiket_id);
+    var currentCount = parseInt(countingElement.innerText);
+    if (currentCount > 1) {
+      countingElement.innerText = currentCount - 1;
+    }
+  }
+
+  function removeWahanaThis(item_id, tiket_id) {
+    // Kembalikan item ke dalam tabel modal
+    var nama = document.getElementById('ket_' + tiket_id).innerText;
+    var harga = document.getElementById('harga_' + tiket_id).innerText;
+
+    var newRow = document.createElement('tr');
+    newRow.id = 'row_' + tiket_id;
+    newRow.innerHTML = `
+      <td class="align-middle text-center">${nama}</td>
+      <td class="align-middle text-center">${harga}</td>
+      <td class="align-middle text-center">
+        <button onclick="addWahanaThis('${tiket_id}', '${nama}', '${harga}');" class="btn btn-primary">Pilih</button>
+      </td>
+    `;
+    
+    var modalTableBody = document.querySelector('#exampleModal table tbody');
+    var firstRow = modalTableBody.querySelector('tr');
+    modalTableBody.insertBefore(newRow, firstRow);
+
+    // Hapus item dari #keranjang
+    var itemToRemove = document.getElementById(item_id);
+    if (itemToRemove) {
+      itemToRemove.remove();
+    }
+  }
+
+</script>
+
 <?= view('layout/footer');?>
 
