@@ -121,7 +121,7 @@
 					>
 						<button
 							class="active"
-							onclick="openTab('pencapaian')"
+							onclick="openTab('loket')"
 							style="padding: 10px 12px"
 						>
 							<i
@@ -160,7 +160,7 @@
 
 				<div
 					class="tab-content active"
-					id="pencapaian"
+					id="loket"
 					style="
 						width: 95%;
 						margin: 0px auto;
@@ -170,11 +170,12 @@
 					"
 				>
 					<div
-						onclick="openPage('tiket');"
 						style="display: inline-block; width: 24%; text-align: center"
 					>
+					<a href="<?= base_url('loket') ?>">
 						<img style="width: 65px" src="<?= base_url() ?>assets/img/boot.png" />
 						<span style="font-weight: bold; padding-bottom: 10px">Loket</span>
+					</a>
 					</div>
 					<div
 						onclick="openPage('booth');"

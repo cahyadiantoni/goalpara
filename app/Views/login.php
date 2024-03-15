@@ -114,27 +114,17 @@
 						</div>
 
 						<div class="wizard-footer">
-						<button
+							<div 
+							class="" 
+							style="margin-top:10px;box-shadow: rgba(0, 0, 0, 0) 0px 5px 15px 0px;text-align:center;"
+							>
+							<button 
 							type="submit"
-							class=""
-							style="
-								margin-top: 10px;
-								box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
-								width: 90%;
-								margin: 0px auto;
-								height: 36px;
-								text-align: center;
-								padding-top: 8px;
-								padding-bottom: 8px;
-								background-color: #199a50;
-								border-radius: 18px;
-								color: white;
-								font-size: 14px;
-								font-weight: bold;
-							"
-						>
-							Login
-						</button>
+							style="width:90%;margin:0px auto;height:36px;text-align:center;padding-top:8px;padding-bottom:8px;background-color:#199a50;border-radius:18px;color:white;font-size:14px;font-weight:bold;"
+							>
+								Login
+							</button>    
+							</div>
 						<!-- Menampilkan pesan error jika ada -->
 						<?php if(session()->getFlashdata('error')): ?>
 							<div class="alert alert-danger" role="alert">
