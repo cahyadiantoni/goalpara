@@ -1,182 +1,31 @@
 <?= view('layout/header'); ?>
 
-<video
-	playsinline
-	autoplay
-	muted
-	loop
-	id="preview0"
-	style="
-		display: none;
-		height: 150px;
-		position: fixed;
-		top: 200px;
-		left: 40%;
-		z-index: 10000;
-	"
-></video>
-<div id="login" style="">
-	<div
-		style="
-			width: 100%;
-			min-height: 800px;
-			margin-bottom: 5px;
-			padding-top: 45px;
-			background-color: #3db379;
-		"
-	>
-		<img src="<?= base_url() ?>assets/img/logo.png" style="width: 130px; margin-left: 20px" />
+<div class="MacbookAir1" style="width: 100%; height: 832px; padding-top: 30px; padding-bottom: 97px; padding-left: 415px; padding-right: 414.67px; background: #5CBBC1; flex-direction: column; justify-content: flex-start; align-items: center; gap: 28px; display: inline-flex">
+    <img class="Image1" style="width: 306px; height: 86px" src="<?= base_url() ?>assets/img/logo.png" />
+    <form action="<?= base_url('login') ?>" method="post" class="Group14" style="width: 450.33px; height: 500px; position: relative">
+        <div class="Rectangle2" style="width: 450.33px; height: 538px; left: 0; right: 0; margin-left: auto; margin-right: auto; top: 0px; position: absolute; background: white; box-shadow: 0px 4px 30px 4px rgba(0, 0, 0, 0.22); border-radius: 35px"></div>
+        <img class="MaleUser" style="width: 132.56px; height: 132px; left: 158.89px; top: 36px; position: absolute" src="<?= base_url() ?>assets/img/ic_avatar.png" />
 
-		<div
-			class="row"
-			style="
-				width: 90%;
-				margin: 20px auto;
-				background-color: #fff;
-				border-radius: 15px;
-				min-height: 500px;
-				box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 10px;
-			"
-		>
-			<div
-				class="col-sm-8 col-sm-offset-2"
-				style="padding-left: 0px; padding-right: 0px"
-			>
-				<!--      Wizard container        -->
-				<div class="wizard-container" style="padding-top: 0px">
-					<form action="<?= base_url('login') ?>" method="post">
-						<!--        You can switch " data-color="purple" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
+        <div class="Group13" style="width: 341.38px; height: 64.48px; left: 54.48px; top: 370px; position: absolute">
+            <div class="Rectangle5" style="width: 341.38px; height: 64.48px; left: 0px; top: 0px; position: absolute; background: #5CBBC1; border-radius: 38px"></div>
+            <button type="submit" class="Login" style="width: 67.19px; height: 42px; left: 141.64px; top: 15px; position: absolute; color: white; font-size: 26px; font-family: Poppins; font-weight: 600;">Login</button>
+        </div>
 
-						<div
-							class="wizard-header"
-							style="width: 100%; text-align: center; padding: 15px 0 5px"
-						></div>
-						<div
-							style="
-								width: 80%;
-								margin: 0px auto;
-								text-align: left;
-								padding: 0px 0px 20px;
-								color: #000;
-								font-size: 14px;
-							"
-						>
-							<div
-								style="
-									font-size: 16px;
-									font-weight: bold;
-									color: #000;
-									padding: 10px 10px 20px 0px;
-								"
-							>
-								Masuk Akun
-							</div>
-							Selamat Datang, silahkan isi Username dan Password anda untuk
-							memulai!
-						</div>
+        <?php if (session()->getFlashdata('error')) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
 
-						<div class="row">
-							<div class="col-sm-9">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="material-icons">face</i>
-									</span>
-									<div class="form-group label-floating" style="width: 77%">
-										<label class="control-label"
-											>Username <small>(required)</small></label
-										>
-										<input
-											name="username"
-											id="username"
-											type="text"
-											class="form-control"
-										/>
-									</div>
-								</div>
-
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="material-icons">lock</i>
-									</span>
-									<div class="form-group label-floating" style="width: 77%">
-										<label class="control-label"
-											>Password <small>(required)</small></label
-										>
-										<input
-											name="password"
-											id="password"
-											type="password"
-											class="form-control"
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="wizard-footer">
-							<div 
-							class="" 
-							style="margin-top:10px;box-shadow: rgba(0, 0, 0, 0) 0px 5px 15px 0px;text-align:center;"
-							>
-							<button 
-							type="submit"
-							style="width:90%;margin:0px auto;height:36px;text-align:center;padding-top:8px;padding-bottom:8px;background-color:#199a50;border-radius:18px;color:white;font-size:14px;font-weight:bold;"
-							>
-								Login
-							</button>    
-							</div>
-						<!-- Menampilkan pesan error jika ada -->
-						<?php if(session()->getFlashdata('error')): ?>
-							<div class="alert alert-danger" role="alert">
-								<?= session()->getFlashdata('error') ?>
-							</div>
-						<?php endif; ?>
-							<div
-								id="info"
-								style="width: 100%; margin-top: 15px; text-align: center"
-							></div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="input-group">
-							<span style="margin-left: 20px; margin-right: 10px">
-								<input
-									name="remember"
-									id="remember"
-									type="checkbox"
-									class="form-control"
-								/>
-							</span>
-							<div class="form-group label-floating" style="width: 77%">
-								Ingat saya
-							</div>
-						</div>
-						<div
-							style="
-								width: 90%;
-								margin: 10px auto;
-								min-heigt: 30px;
-								border-bottom: 1px #ccc solid;
-							"
-						></div>
-						<div
-							style="
-								width: 70%;
-								margin: 10px auto;
-								text-align: center;
-								color: #333;
-							"
-						>
-							Goalpara, 2024
-						</div>
-					</form>
-				</div>
-				<!-- wizard container -->
-			</div>
-		</div>
-		<!-- end row -->
-	</div>
+        <div class="Group11" style="width: 341.54px; height: 58.71px; left: 54.48px; top: 193px; position: absolute; border: 2px solid #AEAEAE; border-radius: 38px;">
+            <div class="Rectangle5"></div>
+            <input type="text" name="username" placeholder="Username" class="Username" style="width: 90%; height: 90%; position: absolute; left: 5%; top: 5%; color: #AEAEAE; font-size: 18px; font-family: Poppins; font-weight: 500; border: none; outline: none; background: transparent;">
+        </div>
+        <div class="Group12" style="width: 341.38px; height: 58.68px; left: 54.48px; top: 277px; position: absolute; border: 2px solid #AEAEAE; border-radius: 38px;">
+            <div class="Rectangle5"></div>
+            <input type="password" name="password" placeholder="Password" class="Password" style="width: 90%; height: 90%; position: absolute; left: 5%; top: 5%; color: #AEAEAE; font-size: 18px; font-family: Poppins; font-weight: 600; border: none; outline: none; background: transparent;">
+        </div>
+    </form>
 </div>
 
-
-<?= view('layout/footer');?>
-
+<?= view('layout/footer'); ?>
