@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2024 at 02:23 PM
+-- Generation Time: Mar 22, 2024 at 06:03 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.20
 
@@ -114,37 +114,37 @@ CREATE TABLE `wahana` (
   `id` int(3) NOT NULL,
   `name` varchar(25) NOT NULL,
   `code` varchar(4) NOT NULL,
-  `harga_reg` int(10) NOT NULL DEFAULT 0,
-  `harga_reg2` int(10) NOT NULL DEFAULT 0,
-  `harga_reg3` int(10) NOT NULL DEFAULT 0,
-  `harga_fix` int(10) NOT NULL DEFAULT 0,
-  `harga_fix2` int(10) NOT NULL DEFAULT 0,
-  `harga_fix3` int(10) NOT NULL DEFAULT 0,
-  `stat` int(1) NOT NULL DEFAULT 1
+  `kategori` varchar(50) NOT NULL,
+  `kapasitas` varchar(50) NOT NULL,
+  `harga` int(10) NOT NULL DEFAULT 0,
+  `type` int(3) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `wahana`
 --
 
-INSERT INTO `wahana` (`id`, `name`, `code`, `harga_reg`, `harga_reg2`, `harga_reg3`, `harga_fix`, `harga_fix2`, `harga_fix3`, `stat`) VALUES
-(1, 'Checkout', 'CO', 0, 0, 0, 0, 0, 0, 0),
-(2, 'Checkout', 'CO', 0, 0, 0, 0, 0, 0, 0),
-(3, 'Checkin', 'CI', 0, 0, 0, 0, 0, 0, 0),
-(4, 'ATV Motor', 'ATV', 75000, 150000, 225000, 0, 0, 0, 1),
-(5, 'Mini Outbound', 'MN', 30000, 60000, 90000, 0, 0, 0, 1),
-(6, 'TamanLL', 'TL', 35000, 70000, 105000, 0, 0, 0, 1),
-(7, 'Flying Fox', 'FF', 25000, 40000, 60000, 0, 0, 0, 1),
-(8, 'Rainbow Slide', 'RS', 40000, 70000, 100000, 0, 0, 0, 1),
-(9, 'Mini Zoo', 'MZ', 50000, 60000, 90000, 0, 0, 0, 1),
-(10, 'Kereta Labirin', 'KRL', 15000, 20000, 90000, 0, 0, 0, 1),
-(11, 'Mini Golf', 'MG', 50000, 100000, 150000, 0, 0, 0, 1),
-(12, 'Check In', 'CI', 30000, 90000, 12000, 50000, 0, 0, 1),
-(15, 'CheckIn', 'CI', 50000, 0, 0, 75000, 0, 0, 0),
-(16, 'CheckIn', 'CI', 50000, 0, 0, 75000, 0, 0, 0),
-(17, 'Row Boat', 'RB', 30000, 60000, 90000, 0, 0, 0, 1),
-(18, 'UTV', 'UTV', 100000, 250000, 350000, 250000, 350000, 450000, 1),
-(19, 'Sepeda Listrik', 'SL', 30000, 30000, 30000, 30000, 30000, 30000, 1);
+INSERT INTO `wahana` (`id`, `name`, `code`, `kategori`, `kapasitas`, `harga`, `type`, `status`) VALUES
+(1, 'HTM', 'HTMR', 'Reguler', '1', 40000, 1, 1),
+(2, 'HTM', 'HTMA', 'Anak', '1', 20000, 1, 1),
+(3, 'Rowboat', 'RBR', 'Reguler', '3', 30000, 2, 1),
+(4, 'Taman Lalu Lintas', 'TLLR', 'Reguler', '1', 35000, 2, 1),
+(5, 'Rumah Kucing', 'RKR', 'Reguler', '1', 35000, 2, 1),
+(6, 'Sepeda Listrik', 'SLR', 'Reguler', '1', 35000, 2, 1),
+(7, 'Kereta Labirin', 'KLR', 'Reguler', '1', 15000, 2, 1),
+(8, 'Kereta Labirin', 'KLS', 'Silver', '2', 20000, 2, 1),
+(9, 'Mini Golf', 'MGR', 'Reguler', '1', 50000, 2, 1),
+(10, 'Flying Fox', 'FFR', 'Reguler', '1', 25000, 2, 1),
+(11, 'Flying Fox', 'FFS', 'Silver', '2', 40000, 2, 1),
+(12, 'Mini Outbond', 'MOR', 'Reguler', '1', 30000, 2, 1),
+(13, 'ATV', 'ATVR', 'Reguler', '1', 75000, 2, 1),
+(14, 'UTV', 'UTVR', 'Reguler', '2', 100000, 2, 1),
+(15, 'Rainbow Slide', 'RSR', 'Reguler', '1', 40000, 2, 1),
+(16, 'Rainbow Slide', 'RSS', 'Silver', '2', 70000, 2, 1),
+(17, 'Rainbow Slide', 'RSG', 'Gold', 'Unlimited', 100000, 2, 1),
+(18, 'Mini Zoo', 'MZR', 'Reguler', '1', 40000, 3, 1),
+(19, 'Mini Zoo', 'MZA', 'Anak', '1', 20000, 3, 1);
 
 --
 -- Indexes for dumped tables
@@ -219,6 +219,12 @@ ALTER TABLE `transaction`
 --
 ALTER TABLE `users`
   MODIFY `id` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `wahana`
+--
+ALTER TABLE `wahana`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
