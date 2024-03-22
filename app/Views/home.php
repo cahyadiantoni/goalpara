@@ -35,11 +35,13 @@
       <div class="Printer" style="width: 73.54px; height: 30.33px; left: 34.61px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Printer</div>
       <img class="Print" style="width: 77.86px; height: 71.83px; left: 32.88px; top: 14.37px; position: absolute" src="<?= base_url() ?>assets/img/ic_printer.png" />
     </div>
-    <div class="Group8" style="width: 143.62px; height: 132.49px; left: 615.13px; top: 332.02px; position: absolute">
-      <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
-      <div class="Summary" style="width: 109.88px; height: 30.33px; left: 17.30px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Summary</div>
-      <img class="SummaryList" style="width: 77.86px; height: 71.83px; left: 28.55px; top: 14.37px; position: absolute" src="<?= base_url() ?>assets/img/ic_summary.png" />
-    </div>
+    <a href="<?= base_url('summary') ?>">
+      <div class="Group8" style="width: 143.62px; height: 132.49px; left: 615.13px; top: 332.02px; position: absolute">
+        <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
+        <div class="Summary" style="width: 109.88px; height: 30.33px; left: 17.30px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Summary</div>
+        <img class="SummaryList" style="width: 77.86px; height: 71.83px; left: 28.55px; top: 14.37px; position: absolute" src="<?= base_url() ?>assets/img/ic_summary.png" />
+      </div>
+    </a>
     <a href="<?= base_url('saldo') ?>">
       <div class="Group5" style="width: 143.62px; height: 132.49px; left: 872.08px; top: 142.86px; position: absolute">
         <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
@@ -47,11 +49,13 @@
         <img class="Wallet" style="width: 77.86px; height: 71.83px; left: 28.55px; top: 14.37px; position: absolute" src="<?= base_url() ?>assets/img/ic_saldo.png" />
       </div>
     </a>
+    <a href="<?= base_url('rekap') ?>">
     <div class="Group9" style="width: 143.62px; height: 132.49px; left: 867.76px; top: 332.02px; position: absolute">
       <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
       <div class="Rekap" style="width: 69.21px; height: 30.33px; left: 37.20px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Rekap</div>
       <img class="BuyWithCard" style="width: 77.86px; height: 71.83px; left: 32.88px; top: 14.37px; position: absolute" src="<?= base_url() ?>assets/img/ic_report.png" />
     </div>
+    </a>
 
     <!-- logout button -->
     <a href="<?= base_url('logout') ?>">
