@@ -22,7 +22,8 @@
     <script type="text/javascript">
     let scanner = new Instascan.Scanner({ video: document.getElementById('preview0') });
     scanner.addListener('scan', function (content) {
-      //document.getElementById('kode').innerHTML = content;
+      document.getElementById('rfidtiket').innerHTML = content;
+      cekSaldo();
       currentQR = content;
       console.log(content);
     });
