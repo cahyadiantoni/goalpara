@@ -77,6 +77,7 @@
               <div style="height: 240px; width: 280px; background-color: #43A1A7; border-radius: 12px; text-align: center; display: flex; flex-direction: column; justify-content: center;">
                 <h5 style="font-family: Poppins; vertical-align: middle;">Total Bayar</h5>
                 <h2 id="ttlThis" type="number" style="font-family: Poppins;"></h2>
+                <div id="totalHarga" style="display:none;"></div>
               </div>
               <div style="margin: 20px;"></div>
               <div style="height: 240px; width: 50%; display: flex; flex-direction: column; justify-content: center;">
@@ -164,7 +165,7 @@
           </div> -->
 
           <div id="loader" class="loader" style="display: none; margin: 10px auto; width: 40px; height: 40px"></div>
-          <div onClick="submitThis();" style="margin: 20px auto; width: 50%; padding: 16px; background-color: #43A1A7; color: #fff; border-radius: 32px; text-align: center; font-weight: 500; font-size: 18px; font-family: Poppins;">Submit</div>
+          <div onClick="submitThis();" style="margin: 20px auto; width: 50%; margin-top: 80px; padding: 16px; background-color: #0FE471; color: #fff; border-radius: 32px; text-align: center; font-weight: 500; font-size: 18px; font-family: Poppins;">Submit</div>
         </div>
       </div>
       <div style="min-height: 200px"></div>
