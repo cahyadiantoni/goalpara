@@ -10,5 +10,5 @@ class WahanaModel extends Model
 
     protected $primaryKey = 'id'; // Nama primary key pada tabel
 
-    protected $allowedFields = ['name', 'code', 'harga_reg']; // Kolom-kolom yang diizinkan untuk diisi
+    protected $allowedFields = ['name', 'code', 'kategori', 'kapasitas', 'harga', 'status']; // Kolom-kolom yang diizinkan untuk diisi
 }

@@ -23,7 +23,7 @@
       <div class="Gate" style="width: 53.64px; height: 30.33px; left: 44.99px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Gate</div>
       <img class="Tollbooth" style="width: 77.86px; height: 71.83px; left: 32.88px; top: 14.37px; position: absolute" src="<?= base_url() ?>assets/img/ic_gate.png" />
     </div>
-    <a href="">
+    <a href="<?= base_url('booth') ?>">
       <div class="Booth" style="width: 143.62px; height: 132.49px; left: 353.85px; top: 142.86px; position: absolute">
         <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
         <div class="Booth" style="width: 64.89px; height: 30.33px; left: 38.93px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Booth</div>
@@ -52,14 +52,16 @@
     </div>
 
     <!-- logout button -->
-    <a href="">
+    <a href="<?= base_url('logout') ?>">
       <img class="Logout" style="width: 43.26px; height: 39.91px; left: 1017.43px; top: 29.53px; position: absolute" src="<?= base_url() ?>assets/img/ic_logout.png" />
     </a>
+    <a href="<?= base_url('minizoo') ?>">
     <div class="Group4" style="width: 143.62px; height: 132.49px; left: 610.80px; top: 142.86px; position: absolute">
       <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
       <div class="Zoo" style="width: 40.66px; height: 30.33px; left: 51.91px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Zoo</div>
       <img class="Zoo" style="width: 77.86px; height: 71.83px; left: 32.88px; top: 14.37px; position: absolute" src="<?= base_url() ?>assets/img/ic_loket.png" />
     </div>
+    </a>
   </div>
   <div class="GoalparaTeaPark2024" style="width: 298px; height: 39px; top: 844px; position: absolute; left: 0; right: 0; margin-left: auto; margin-right: auto; color: #43A1A7; font-size: 24px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Goalpara Tea Park 2024</div>
   <img class="MaleUser" style="width: 102px; height: 95px; left: 148px; top: 60px; position: absolute" src="<?= base_url() ?>assets/img/ic_avatar.png" />

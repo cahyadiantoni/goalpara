@@ -7,6 +7,9 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'AuthController::index');
 $routes->post('/login', 'AuthController::login');
+$routes->get('/logout', 'AuthController::logout');
 $routes->get('/home', 'HomeController::index');
 $routes->get('/loket', 'LoketController::index');
 $routes->post('/submitTransaksi', 'LoketController::submitTransaksi');
+$routes->get('/minizoo', 'MiniZooController::index');
+$routes->get('/booth', 'BoothController::index');

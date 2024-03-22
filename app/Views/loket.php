@@ -47,12 +47,12 @@
 
           <div id="keranjang" class="list radius" style="margin-top: 30px; border-radius: 10px; border-radius: 10px; border: 2px solid #B5B5B5; background-color: #F5F5F5; margin-left: 20px; margin-right: 20px;">
             <?php foreach ($wahanas as $wahana) :
-              if ($wahana['id'] == 12) {
+              if ($wahana['id'] == 1) {
             ?>
                 <div class="item" id="item_<?= $wahana['id'] ?>">
-                  <div id="aharga_<?= $wahana['id'] ?>" style="display:none;"><?= $wahana['harga_reg'] ?></div>
+                  <div id="aharga_<?= $wahana['id'] ?>" style="display:none;"><?= $wahana['harga'] ?></div>
                   <h2 style="justify-content: center;">
-                    <i class="material-icons" style="font-size: 28px; margin-right: 10px; color: #333">cancel</i><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 18px; font-family: Poppins;"><?= $wahana['name'] ?> - <span id="hargaTkt"><?= number_format($wahana['harga_reg'], 0, ',', '.'); ?></span></span>
+                    <i class="material-icons" style="font-size: 28px; margin-right: 10px; color: #333">cancel</i><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 18px; font-family: Poppins;"><?= $wahana['name'] ?> - <span id="kategori"><?= $wahana['kategori']; ?></span> - <span id="kapasitas"><?= $wahana['kapasitas']; ?></span> orang - <span id="hargaTkt"><?= number_format($wahana['harga'], 0, ',', '.'); ?></span></span>
                   </h2>
                   <div class="right" style="width: 100px">
                     <button onclick="decrement()"><i class="material-icons" style="font-size: 32px; margin-left: -12px; color: #43A1A7;">add_circle</i></button>
@@ -187,19 +187,23 @@
           <thead>
             <tr>
               <th class="text-center" style="font-family: Poppins;">Nama Tiket</th>
-              <th class="text-center" style="font-family: Poppins;">Harga Reguler</th>
+              <th class="text-center" style="font-family: Poppins;">Kategori</th>
+              <th class="text-center" style="font-family: Poppins;">Kapasitas</th>
+              <th class="text-center" style="font-family: Poppins;">Harga</th>
               <th class="text-center" style="font-family: Poppins;">Action</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($wahanas as $wahana) :
-              if ($wahana['id'] != 12) {
+              if ($wahana['id'] != 1) {
             ?>
                 <tr id="row_<?= $wahana['id']; ?>">
                   <td class="align-middle text-center" style="font-family: Poppins;"><?= $wahana['name']; ?></td>
-                  <td class="align-middle text-center" style="font-family: Poppins;"><?= $wahana['harga_reg']; ?></td>
+                  <td class="align-middle text-center" style="font-family: Poppins;"><?= $wahana['kategori']; ?></td>
+                  <td class="align-middle text-center" style="font-family: Poppins;"><?= $wahana['kapasitas']; ?></td>
+                  <td class="align-middle text-center" style="font-family: Poppins;"><?= $wahana['harga']; ?></td>
                   <td class="align-middle text-center" style="font-family: Poppins;">
-                    <button onclick="addWahanaThis('<?= $wahana['id']; ?>' , '<?= $wahana['name']; ?>' , '<?= $wahana['harga_reg']; ?>' )" class="btn btn-primary" style="background-color: #43A1A7;">Pilih</button>
+                    <button onclick="addWahanaThis('<?= $wahana['id']; ?>' , '<?= $wahana['name']; ?>' , '<?= $wahana['harga']; ?>' , '<?= $wahana['kategori']; ?>' , '<?= $wahana['kapasitas']; ?>' )" class="btn btn-primary" style="background-color: #43A1A7;">Pilih</button>
                   </td>
                 </tr>
             <?php
@@ -285,11 +289,16 @@
     }
   }
 
-  function addWahanaThis(tiket_id, nama, harga) {
+  function addWahanaThis(tiket_id, nama, harga, kategori, kapasitas) {
     var cst = '<div class="item" id="item_' + tiket_id + '">';
     cst += '<div id="aharga_' + tiket_id + '" style="display:none;">' + harga + '</div>';
     cst += '';
-    cst += '<h2 style="font-size:14px;"><i onclick="removeWahanaThis(' + "'" + 'item_' + tiket_id + "','" + tiket_id + "'" + ');" class="material-icons" style="font-size:28px;margin-right:10px;color:red;">cancel</i><span id="ket_' + tiket_id + '" style="vertical-align: top;heigh:20px;padding-top:5px;font-size: 18px; font-family: Poppins;">' + nama + '</span> - ';
+    cst += '<h2 style="font-size:14px;"><i onclick="removeWahanaThis(' + "'" + 'item_' + tiket_id + "','" + tiket_id + "'" + ');" class="material-icons" style="font-size:28px;margin-right:10px;color:red;">cancel</i><span id="ket_' + tiket_id + '" style="vertical-align: top;heigh:20px;padding-top:5px;font-size: 18px; font-family: Poppins;">' + nama + '</span>';
+    cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;"> - </span>';
+    cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;" id="kategori_' + tiket_id + '" >' + kategori + '</span>';
+    cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;"> - </span>';
+    cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;" id="kapasitas_' + tiket_id + '" >' + kapasitas + '</span>';
+    cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;"> orang - </span>';
     cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;" id="harga_' + tiket_id + '" >' + parseFloat(harga).toLocaleString('id-ID') + '</span></h2>';
     cst += '<div class="right" style="width:100px;">';
     cst += '<button onclick="decrementThis(' + "'" + tiket_id + "'" + ')" ><i class="material-icons" style="font-size:32px;margin-left:-12px; color: #43A1A7;">add_circle</i></button>';
@@ -330,11 +339,15 @@
     // Kembalikan item ke dalam tabel modal
     var nama = document.getElementById('ket_' + tiket_id).innerText;
     var harga = document.getElementById('aharga_' + tiket_id).innerText;
+    var kategori = document.getElementById('kategori_' + tiket_id).innerText;
+    var kapasitas = document.getElementById('kapasitas_' + tiket_id).innerText;
 
     var newRow = document.createElement('tr');
     newRow.id = 'row_' + tiket_id;
     newRow.innerHTML = `
       <td class="align-middle text-center">${nama}</td>
+      <td class="align-middle text-center">${kategori}</td>
+      <td class="align-middle text-center">${kapasitas}</td>
       <td class="align-middle text-center">${harga}</td>
       <td class="align-middle text-center">
         <button onclick="addWahanaThis('${tiket_id}', '${nama}', '${harga}');" class="btn btn-primary">Pilih</button>

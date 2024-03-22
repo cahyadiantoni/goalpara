@@ -8,7 +8,7 @@ use App\Models\TransactionModel;
 use App\Models\SelectedTransactionModel;
 use App\Models\BalanceModel;
 
-class LoketController extends BaseController
+class MiniZooController extends BaseController
 {
     public function index()
     {
@@ -25,8 +25,11 @@ class LoketController extends BaseController
         // Load model WahanaModel
         $wahanaModel = new WahanaModel();
 
-        // Ambil data tiket yang memiliki stat = 1 dari database
-        $data['wahanas'] = $wahanaModel->where('status', 1)->findAll();
+        // Ambil data tiket yang memiliki stat = 1 dan tipe = 2(booth) dari database
+        $data['wahanas'] = $wahanaModel->where('status', 1)
+                               ->where('type', 3)
+                               ->findAll();
+
 
         // Load view for home page with user data
         return view('loket', $data);
