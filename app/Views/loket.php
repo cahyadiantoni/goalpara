@@ -19,8 +19,8 @@
           <div style="display: flex; flex-direction: row;">
             <div class="" style="margin: 10px auto; padding: 10px; width: 80%; background-color: #F5F5F5; text-align: center; color: #fff; border-radius: 10px; border: 2px solid #B5B5B5;">
               <!-- <div style="font-size: 14px; color: #fff; padding: 15px 10px 0px">QR Number - Qty : <span id="rfQty" style="font-size: 18px; font-weight: bold"></span></div> -->
-              <textarea id="rfidtiket" onfocusout="lostFocus()" style="font-family: Poppins; width: 100%; color: #43A1A7; font-size: 18px; font-weight: bold; padding: 0px 10px 15px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word"></textarea>
-
+              <textarea id="rfidtiket" oninput="handleInput()" onfocusout="lostFocus()" style=" font-family: Poppins; width: 100%; color: #43A1A7; font-size: 18px; font-weight: bold; padding: 0px 10px 15px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word"></textarea>
+              <div id="qrCodesContainer" style="display: flex; flex-wrap: wrap; color: #43A1A7;"></div>
               <!--<textarea id="rfidtiket" style="backgroud-color: #fff width:100%;color:#fff;font-size:14px;font-weight:bold;padding:0px 10px 15px;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;"></textarea>-->
             </div>
             <div class="" style="margin: 10px auto; width: 15%; background-color: #F5F5F5; text-align: center; color: #fff; border-radius: 10px; border: 2px solid #B5B5B5;">
@@ -217,6 +217,74 @@
 </div>
 
 <script>
+  function handleInput() {
+    // Mendapatkan nilai dari textarea
+    var inputText = document.getElementById("rfidtiket").value;
+
+    // Memisahkan teks menjadi potongan kode QR menggunakan koma atau spasi sebagai pemisah
+    var qrCodes = inputText.split(/[\s,]+/);
+
+    // Membersihkan kontainer sebelum menambahkan QR codes baru
+    document.getElementById("qrCodesContainer").innerHTML = '';
+
+    // Membuat dan menambahkan div untuk setiap potongan kode QR
+    qrCodes.forEach(qrCode => {
+      // Menghilangkan spasi awal dan akhir dari potongan kode QR
+      qrCode = qrCode.trim();
+
+      // Membuat div untuk chip QR
+      if (qrCode) {
+        var qrDiv = document.createElement("div");
+        qrDiv.textContent = qrCode;
+        qrDiv.style.margin = "5px";
+        qrDiv.style.padding = "7px";
+        qrDiv.style.paddingRight = "14px";
+        qrDiv.style.paddingLeft = "14px";
+        qrDiv.style.border = "1px solid #43A1A7";
+        qrDiv.style.borderRadius = "5px";
+        qrDiv.style.background = "#5CBBC1";
+        qrDiv.style.color = "#fff";
+        qrDiv.style.borderRadius = "16px";
+        qrDiv.style.fontSize = "16px";
+
+
+        // Membuat tombol hapus untuk setiap chip QR
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "x";
+        deleteButton.style.backgroundColor = "#f44336";
+        deleteButton.style.color = "#fff";
+        deleteButton.style.border = "none";
+        deleteButton.style.borderRadius = "50%";
+        deleteButton.style.cursor = "pointer";
+        deleteButton.style.marginLeft = "5px";
+        deleteButton.onclick = function() {
+          // Menghapus chip QR beserta karakter di dalamnya
+          qrDiv.remove();
+          // Mendapatkan nilai dari textarea dan menghapus kode QR yang sesuai dengan tombol hapus yang ditekan
+          var updatedText = document.getElementById("rfidtiket").value.replace(qrCode, '').trim();
+          document.getElementById("rfidtiket").value = updatedText;
+          // Memanggil kembali handleInput() untuk memperbarui tampilan chip QR
+          handleInput();
+        };
+
+        // Menambahkan tombol hapus ke dalam div chip QR
+        qrDiv.appendChild(deleteButton);
+
+        // Menambahkan div chip QR beserta tombol hapus ke dalam kontainer
+        document.getElementById("qrCodesContainer").appendChild(qrDiv);
+      }
+    });
+  }
+
+
+  function lostFocus() {
+    // Menambahkan pemisah terakhir jika tidak ada spasi terakhir pada textarea
+    var inputText = document.getElementById("rfidtiket").value;
+    if (inputText.trim() && inputText.charAt(inputText.length - 1) !== ",") {
+      document.getElementById("rfidtiket").value += ",";
+    }
+  }
+
   function addWahanaThis(tiket_id, nama, harga) {
     var cst = '<div class="item" id="item_' + tiket_id + '">';
     cst += '<div id="aharga_' + tiket_id + '" style="display:none;">' + harga + '</div>';
