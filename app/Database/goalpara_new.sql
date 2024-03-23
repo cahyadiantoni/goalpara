@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2024 at 06:03 PM
+-- Generation Time: Mar 23, 2024 at 03:28 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.20
 
@@ -33,6 +33,39 @@ CREATE TABLE `balance` (
   `wahana_id` int(250) NOT NULL,
   `amount` int(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gate`
+--
+
+CREATE TABLE `gate` (
+  `id` int(10) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `code` varchar(10) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gate`
+--
+
+INSERT INTO `gate` (`id`, `name`, `code`, `status`) VALUES
+(1, 'Check In', 'CI', 1),
+(2, 'Check Out', 'CO', 1),
+(3, 'Row Boat', 'RB', 1),
+(4, 'Taman Lalu Lintas', 'TLL', 1),
+(5, 'Rumah Kucing', 'RK', 1),
+(6, 'Sepeda Listrik', 'SL', 1),
+(7, 'Kereta Labirin', 'KL', 1),
+(8, 'Mini Golf', 'MG', 1),
+(9, 'Flying Fox', 'FF', 1),
+(10, 'Mini Outbond', 'MO', 1),
+(11, 'ATV', 'ATV', 1),
+(12, 'UTV', 'UTV', 1),
+(13, 'Rainbow Slide', 'RS', 1),
+(14, 'Mini Zoo', 'MZ', 1);
 
 -- --------------------------------------------------------
 
@@ -112,6 +145,7 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `role_id`) VALUES
 
 CREATE TABLE `wahana` (
   `id` int(3) NOT NULL,
+  `gate_id` int(10) NOT NULL,
   `name` varchar(25) NOT NULL,
   `code` varchar(4) NOT NULL,
   `kategori` varchar(50) NOT NULL,
@@ -125,26 +159,26 @@ CREATE TABLE `wahana` (
 -- Dumping data for table `wahana`
 --
 
-INSERT INTO `wahana` (`id`, `name`, `code`, `kategori`, `kapasitas`, `harga`, `type`, `status`) VALUES
-(1, 'HTM', 'HTMR', 'Reguler', '1', 40000, 1, 1),
-(2, 'HTM', 'HTMA', 'Anak', '1', 20000, 1, 1),
-(3, 'Rowboat', 'RBR', 'Reguler', '3', 30000, 2, 1),
-(4, 'Taman Lalu Lintas', 'TLLR', 'Reguler', '1', 35000, 2, 1),
-(5, 'Rumah Kucing', 'RKR', 'Reguler', '1', 35000, 2, 1),
-(6, 'Sepeda Listrik', 'SLR', 'Reguler', '1', 35000, 2, 1),
-(7, 'Kereta Labirin', 'KLR', 'Reguler', '1', 15000, 2, 1),
-(8, 'Kereta Labirin', 'KLS', 'Silver', '2', 20000, 2, 1),
-(9, 'Mini Golf', 'MGR', 'Reguler', '1', 50000, 2, 1),
-(10, 'Flying Fox', 'FFR', 'Reguler', '1', 25000, 2, 1),
-(11, 'Flying Fox', 'FFS', 'Silver', '2', 40000, 2, 1),
-(12, 'Mini Outbond', 'MOR', 'Reguler', '1', 30000, 2, 1),
-(13, 'ATV', 'ATVR', 'Reguler', '1', 75000, 2, 1),
-(14, 'UTV', 'UTVR', 'Reguler', '2', 100000, 2, 1),
-(15, 'Rainbow Slide', 'RSR', 'Reguler', '1', 40000, 2, 1),
-(16, 'Rainbow Slide', 'RSS', 'Silver', '2', 70000, 2, 1),
-(17, 'Rainbow Slide', 'RSG', 'Gold', 'Unlimited', 100000, 2, 1),
-(18, 'Mini Zoo', 'MZR', 'Reguler', '1', 40000, 3, 1),
-(19, 'Mini Zoo', 'MZA', 'Anak', '1', 20000, 3, 1);
+INSERT INTO `wahana` (`id`, `gate_id`, `name`, `code`, `kategori`, `kapasitas`, `harga`, `type`, `status`) VALUES
+(1, 1, 'HTM', 'HTMR', 'Reguler', '1', 40000, 1, 1),
+(2, 1, 'HTM', 'HTMA', 'Anak', '1', 20000, 1, 1),
+(4, 3, 'Rowboat', 'RBR', 'Reguler', '3', 30000, 2, 1),
+(5, 4, 'Taman Lalu Lintas', 'TLLR', 'Reguler', '1', 35000, 2, 1),
+(6, 5, 'Rumah Kucing', 'RKR', 'Reguler', '1', 35000, 2, 1),
+(7, 6, 'Sepeda Listrik', 'SLR', 'Reguler', '1', 35000, 2, 1),
+(8, 7, 'Kereta Labirin', 'KLR', 'Reguler', '1', 15000, 2, 1),
+(9, 7, 'Kereta Labirin', 'KLS', 'Silver', '2', 20000, 2, 1),
+(10, 8, 'Mini Golf', 'MGR', 'Reguler', '1', 50000, 2, 1),
+(11, 9, 'Flying Fox', 'FFR', 'Reguler', '1', 25000, 2, 1),
+(12, 9, 'Flying Fox', 'FFS', 'Silver', '2', 40000, 2, 1),
+(13, 10, 'Mini Outbond', 'MOR', 'Reguler', '1', 30000, 2, 1),
+(14, 11, 'ATV', 'ATVR', 'Reguler', '1', 75000, 2, 1),
+(15, 12, 'UTV', 'UTVR', 'Reguler', '2', 100000, 2, 1),
+(16, 13, 'Rainbow Slide', 'RSR', 'Reguler', '1', 40000, 2, 1),
+(17, 13, 'Rainbow Slide', 'RSS', 'Silver', '2', 70000, 2, 1),
+(18, 13, 'Rainbow Slide', 'RSG', 'Gold', 'Unlimited', 100000, 2, 1),
+(19, 14, 'Mini Zoo', 'MZR', 'Reguler', '1', 40000, 3, 1),
+(20, 14, 'Mini Zoo', 'MZA', 'Anak', '1', 20000, 3, 1);
 
 --
 -- Indexes for dumped tables
@@ -154,6 +188,12 @@ INSERT INTO `wahana` (`id`, `name`, `code`, `kategori`, `kapasitas`, `harga`, `t
 -- Indexes for table `balance`
 --
 ALTER TABLE `balance`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gate`
+--
+ALTER TABLE `gate`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -194,7 +234,13 @@ ALTER TABLE `wahana`
 -- AUTO_INCREMENT for table `balance`
 --
 ALTER TABLE `balance`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `gate`
+--
+ALTER TABLE `gate`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -206,13 +252,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `selected_transaction`
 --
 ALTER TABLE `selected_transaction`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -224,7 +270,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wahana`
 --
 ALTER TABLE `wahana`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
