@@ -17,3 +17,6 @@ $routes->post('/cek_saldo', 'SaldoController::ceksaldo');
 $routes->get('/saldo', 'SaldoController::index');
 $routes->get('/summary', 'SummaryController::index');
 $routes->get('/rekap', 'RekapController::index');
+$routes->get('/gate', 'GateController::index');
+$routes->get('/gatecek/(:num)', 'GateController::gatecek/$1');
+$routes->post('/cekgate', 'GateController::cekgate');

@@ -18,11 +18,13 @@
         <div class="Loket" style="width: 58.83px; height: 30.33px; left: 42px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Loket</div>
       </div>
     </a>
+    <a href="<?= base_url('gate') ?>">
     <div class="gate" style="width: 143.62px; height: 132.49px; left: 96.90px; top: 332.02px; position: absolute">
       <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
       <div class="Gate" style="width: 53.64px; height: 30.33px; left: 44.99px; top: 86.20px; position: absolute; color: #6D6D6D; font-size: 20px; font-family: Poppins; font-weight: 600; word-wrap: break-word">Gate</div>
       <img class="Tollbooth" style="width: 77.86px; height: 71.83px; left: 32.88px; top: 14.37px; position: absolute" src="<?= base_url() ?>assets/img/ic_gate.png" />
     </div>
+    </a>
     <a href="<?= base_url('booth') ?>">
       <div class="Booth" style="width: 143.62px; height: 132.49px; left: 353.85px; top: 142.86px; position: absolute">
         <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
