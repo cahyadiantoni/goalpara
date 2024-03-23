@@ -92,7 +92,7 @@ class GateController extends BaseController
                 $balanceModel->update($balanceId, ['amount' => $newAmount]);
                 $response = [
                     'success' => true,
-                    'message' => 'Berhasil masuk',
+                    'message' => "Berhasil masuk, saldo tersisa $newAmount",
                     'data' => $result
                 ];
             } elseif ($amount > 0) {
@@ -100,7 +100,7 @@ class GateController extends BaseController
                 $balanceModel->delete($balanceId);
                 $response = [
                     'success' => true,
-                    'message' => 'Berhasil masuk',
+                    'message' => "Berhasil masuk, saldo tersisa 0",
                     'data' => $result
                 ];
             } else {
