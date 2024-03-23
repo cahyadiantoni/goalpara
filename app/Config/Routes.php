@@ -15,6 +15,7 @@ $routes->get('/minizoo', 'MiniZooController::index');
 $routes->get('/booth', 'BoothController::index');
 $routes->post('/cek_saldo', 'SaldoController::ceksaldo');
 $routes->post('/gate_val', 'SaldoController::gateValidation');
+$routes->post('/gate_rfid', 'SaldoController::gateRfid');
 $routes->get('/saldo', 'SaldoController::index');
 $routes->get('/summary', 'SummaryController::index');
 $routes->get('/rekap', 'RekapController::index');

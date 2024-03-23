@@ -7,6 +7,7 @@ use App\Models\WahanaModel;
 use App\Models\TransactionModel;
 use App\Models\SelectedTransactionModel;
 use App\Models\BalanceModel;
+use App\Models\RfidModel;
 
 class SaldoController extends BaseController
 {
@@ -76,18 +77,42 @@ class SaldoController extends BaseController
                 // Kurangi amount jika lebih dari 1
                 $newAmount = $saldo - 1;
                 $balanceModel->update($balanceId, ['amount' => $newAmount]);
-                return "@*kodegate=$qrcode*saldo=$newAmount*buka=1#";
+                return "@*kodegate=$idgate*saldo=$newAmount*buka=1#";
             } elseif ($saldo > 0) {
                 // Hapus row pada tabel balance jika amount kurang dari 1
                 $balanceModel->delete($balanceId);
-                return "@*kodegate=$qrcode*saldo=0*buka=1#";
+                return "@*kodegate=$idgate*saldo=0*buka=1#";
             } else {
                 // Jika amount kurang dari 0 atau tidak ada row, kirim response saldo tidak ada
-                return "@*kodegate=$qrcode*saldo=0*buka=0#";
+                return "@*kodegate=$idgate*saldo=0*buka=0#";
             }
         } else {
             // Kirim respons JSON kosong jika tidak ada data yang ditemukan
-            return "@*kodegate=$qrcode*saldo=0*buka=0#";
+            return "@*kodegate=$idgate*saldo=0*buka=0#";
+        }
+    }
+
+
+
+    public function gateRfid()
+    {
+        // Ambil idgate dan qrcode dari URL
+        $idgate = $this->request->getVar('idgate');
+        $rfid = $this->request->getVar('rfid');
+
+        // Load model yang diperlukan
+        $rfidModel = new RfidModel();
+
+        $saldoWahana = $rfidModel->select('rfid.*')
+            ->where('rfid.uid', $rfid)
+            ->first();
+
+        // Periksa apakah ada data yang ditemukan
+        if ($saldoWahana) {
+            return "@*kodegate=$idgate*saldo=0*buka=1#";
+        } else {
+            // Kirim respons JSON kosong jika tidak ada data yang ditemukan
+            return "@*kodegate=$idgate*saldo=0*buka=0#";
         }
     }
 }
