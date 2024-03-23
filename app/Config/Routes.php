@@ -14,6 +14,7 @@ $routes->post('/submitTransaksi', 'LoketController::submitTransaksi');
 $routes->get('/minizoo', 'MiniZooController::index');
 $routes->get('/booth', 'BoothController::index');
 $routes->post('/cek_saldo', 'SaldoController::ceksaldo');
+$routes->post('/gate_val', 'SaldoController::gateValidation');
 $routes->get('/saldo', 'SaldoController::index');
 $routes->get('/summary', 'SummaryController::index');
 $routes->get('/rekap', 'RekapController::index');
