@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2024 at 03:28 AM
+-- Generation Time: Mar 24, 2024 at 04:58 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.20
 
@@ -66,6 +66,33 @@ INSERT INTO `gate` (`id`, `name`, `code`, `status`) VALUES
 (12, 'UTV', 'UTV', 1),
 (13, 'Rainbow Slide', 'RS', 1),
 (14, 'Mini Zoo', 'MZ', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rfid`
+--
+
+CREATE TABLE `rfid` (
+  `id` int(50) NOT NULL,
+  `uid` int(50) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `bagian` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat_wahana`
+--
+
+CREATE TABLE `riwayat_wahana` (
+  `id` int(50) NOT NULL,
+  `gate_id` int(50) NOT NULL,
+  `wahana_id` int(50) NOT NULL,
+  `tiket` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -160,8 +187,9 @@ CREATE TABLE `wahana` (
 --
 
 INSERT INTO `wahana` (`id`, `gate_id`, `name`, `code`, `kategori`, `kapasitas`, `harga`, `type`, `status`) VALUES
-(1, 1, 'HTM', 'HTMR', 'Reguler', '1', 40000, 1, 1),
-(2, 1, 'HTM', 'HTMA', 'Anak', '1', 20000, 1, 1),
+(1, 1, 'Check In', 'CIR', 'Reguler', '1', 40000, 1, 1),
+(2, 1, 'Check In', 'CIA', 'Anak', '1', 20000, 1, 1),
+(3, 2, 'Check Out', 'CO', 'Reguler', '1', 0, 1, 1),
 (4, 3, 'Rowboat', 'RBR', 'Reguler', '3', 30000, 2, 1),
 (5, 4, 'Taman Lalu Lintas', 'TLLR', 'Reguler', '1', 35000, 2, 1),
 (6, 5, 'Rumah Kucing', 'RKR', 'Reguler', '1', 35000, 2, 1),
@@ -194,6 +222,18 @@ ALTER TABLE `balance`
 -- Indexes for table `gate`
 --
 ALTER TABLE `gate`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `rfid`
+--
+ALTER TABLE `rfid`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `riwayat_wahana`
+--
+ALTER TABLE `riwayat_wahana`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -234,13 +274,25 @@ ALTER TABLE `wahana`
 -- AUTO_INCREMENT for table `balance`
 --
 ALTER TABLE `balance`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `gate`
 --
 ALTER TABLE `gate`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `rfid`
+--
+ALTER TABLE `rfid`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `riwayat_wahana`
+--
+ALTER TABLE `riwayat_wahana`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -252,13 +304,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `selected_transaction`
 --
 ALTER TABLE `selected_transaction`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -270,7 +322,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wahana`
 --
 ALTER TABLE `wahana`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
