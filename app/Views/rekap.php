@@ -15,9 +15,8 @@
 
         <div class="tab-content active" id="loketform" style="width: 95%; margin: 0px auto; padding: 15px 10px; border-top: 1px #ccc solid; padding-bottom: 20px">
           <h4 style="font-family: Poppins; padding-top: 32px; margin-left: 20px;">Rekap</h4>
-          <div class="" style="justify-content: center; padding: 20px; margin: 20px; background-color: #F5F5F5; text-align: center; color: #fff; border-radius: 10px; border: 2px solid #B5B5B5;">
             <div style="display: flex; flex-direction: row; justify-content: center;">
-            <table class="table" id="saldoTable">
+            <table class="display nowrap" style="width:100%" id="saldoTable">
                 <thead>
                     <tr>
                     <th class="text-center" style="font-family: Poppins;">Tiket</th>
@@ -40,7 +39,6 @@
                 </tbody>
                 </table>
             </div>
-          </div>
         </div>
       </div>
       <div style="min-height: 200px"></div>
@@ -49,3 +47,14 @@
   </div>
 </div>
 <?= view('layout/footer'); ?>
+<!-- data tables -->	
+<script>
+$(document).ready(function() {
+        $('#saldoTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>
