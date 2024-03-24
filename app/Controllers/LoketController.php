@@ -74,23 +74,41 @@ class LoketController extends BaseController
             if ($savedSelected) {
                 $balanceModel = new BalanceModel();
                 $balanceData = [];
+                
                 foreach ($wahanas as $wahana) {
-                    $balanceData[] = [
-                        'tiket' => $rfidtiket,
-                        'wahana_id' => $wahana['item_id'],
-                        'amount' => $wahana['jumlah']
-                    ];
+                    $existingBalance = $balanceModel->where('tiket', $rfidtiket)
+                                                    ->where('wahana_id', $wahana['item_id'])
+                                                    ->first();
+                
+                    if ($existingBalance) {
+                        // Jika data sudah ada, update jumlah dengan menambahkan jumlah lama dan baru
+                        $existingAmount = $existingBalance['amount'];
+                        $newAmount = $existingAmount + $wahana['jumlah'];
+                
+                        $balanceModel->update($existingBalance['id'], ['amount' => $newAmount]);
+                    } else {
+                        // Jika data belum ada, tambahkan data baru
+                        $balanceData[] = [
+                            'tiket' => $rfidtiket,
+                            'wahana_id' => $wahana['item_id'],
+                            'amount' => $wahana['jumlah']
+                        ];
+                    }
                 }
-
-                $saved = $balanceModel->insertBatch($balanceData);
-
-                if ($saved) {
-                    // Jika data berhasil disimpan, kirim respon berhasil
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Transaksi berhasil disimpan']);
+                
+                // Insert batch untuk data baru yang belum ada
+                if (!empty($balanceData)) {
+                    $saved = $balanceModel->insertBatch($balanceData);
+                
+                    if ($saved) {
+                        return $this->response->setJSON(['status' => 'success', 'message' => 'Transaksi berhasil disimpan']);
+                    } else {
+                        return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan data saldo']);
+                    }
                 } else {
-                    // Jika terjadi kesalahan saat menyimpan data, kirim respon gagal
-                    return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan data saldo']);
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'Transaksi berhasil disimpan']);
                 }
+                
             } else {
                 // Jika terjadi kesalahan saat menyimpan data, kirim respon gagal
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan data wahana yang dipilih']);

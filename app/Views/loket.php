@@ -47,7 +47,7 @@
 
           <div id="keranjang" class="list radius" style="margin-top: 30px; border-radius: 10px; border-radius: 10px; border: 2px solid #B5B5B5; background-color: #F5F5F5; margin-left: 20px; margin-right: 20px;">
             <?php foreach ($wahanas as $wahana) :
-              if ($wahana['id'] == 1) {
+              if ($wahana['id'] == 1 || $wahana['id'] == 3) {
             ?>
                 <div class="item" id="item_<?= $wahana['id'] ?>">
                   <div id="aharga_<?= $wahana['id'] ?>" style="display:none;"><?= $wahana['harga'] ?></div>
@@ -195,7 +195,7 @@
           </thead>
           <tbody>
             <?php foreach ($wahanas as $wahana) :
-              if ($wahana['id'] != 1) {
+              if ($wahana['id'] != 1 && $wahana['id'] != 2 && $wahana['id'] != 3) {
             ?>
                 <tr id="row_<?= $wahana['id']; ?>">
                   <td class="align-middle text-center" style="font-family: Poppins;"><?= $wahana['name']; ?></td>
