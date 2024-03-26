@@ -51,6 +51,7 @@
             ?>
                 <div class="item" id="item_<?= $wahana['id'] ?>">
                   <div id="aharga_<?= $wahana['id'] ?>" style="display:none;"><?= $wahana['harga'] ?></div>
+                  <div id="kapasitas_<?= $wahana['id'] ?>" style="display:none;"><?= $wahana['kapasitas'] ?></div>
                   <h2 style="justify-content: center;">
                     <i class="material-icons" style="font-size: 28px; margin-right: 10px; color: #333">cancel</i><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 18px; font-family: Poppins;"><?= $wahana['name'] ?> - <span id="kategori"><?= $wahana['kategori']; ?></span> - <span id="kapasitas"><?= $wahana['kapasitas']; ?></span> orang - <span id="hargaTkt"><?= number_format($wahana['harga'], 0, ',', '.'); ?></span></span>
                   </h2>
@@ -395,7 +396,9 @@
     $('.item').each(function() {
       var item_id = $(this).attr('id').split('_')[1];
       var harga = $('#aharga_' + item_id).text();
-      var jumlah = $('#counting_' + item_id).text();
+      var banyak = parseInt($('#counting_' + item_id).text());
+      var kapasitas = parseInt($('#kapasitas_' + item_id).text());
+      var jumlah = banyak * kapasitas;
       wahana.push({
         item_id: item_id,
         harga: harga,
