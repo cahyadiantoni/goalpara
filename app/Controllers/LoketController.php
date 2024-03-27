@@ -44,79 +44,84 @@ class LoketController extends BaseController
 
         // Validasi data (bisa tambahkan validasi tambahan sesuai kebutuhan)
 
-        // Simpan data transaksi ke dalam tabel transaction menggunakan model
+        // Simpan data transaksi untuk setiap rfidtiket ke dalam tabel transaction menggunakan model
         $transactionModel = new TransactionModel();
-        $transactionData = [
-            'tiket' => $rfidtiket,
-            'total' => $totalBayar,
-            'payment_type' => $paymentType,
-            'ref_number' => $refno,
-            'phone' => $phone
-        ];
+        $transactionIdArray = []; // Array untuk menyimpan ID transaksi setiap rfidtiket
 
-        $transactionId = $transactionModel->insert($transactionData); // Simpan transaksi dan dapatkan ID transaksi
+        foreach ($rfidtiket as $rfid) {
+            $transactionData = [
+                'tiket' => $rfid,
+                'total' => $totalBayar,
+                'payment_type' => $paymentType,
+                'ref_number' => $refno,
+                'phone' => $phone
+            ];
 
-        if ($transactionId) {
-            // Simpan data array wahana ke dalam tabel selected_transaction menggunakan model
-            $selectedTransactionModel = new SelectedTransactionModel();
-            $selectedTransactionData = [];
-            foreach ($wahanas as $wahana) {
-                $selectedTransactionData[] = [
-                    'transaction_id' => $transactionId,
-                    'tiket' => $rfidtiket,
-                    'wahana_id' => $wahana['item_id'],
-                    'amount' => $wahana['jumlah']
-                ];
-            }
+            $transactionId = $transactionModel->insert($transactionData); // Simpan transaksi dan dapatkan ID transaksi
 
-            $savedSelected = $selectedTransactionModel->insertBatch($selectedTransactionData);
-
-            if ($savedSelected) {
-                $balanceModel = new BalanceModel();
-                $balanceData = [];
-                
+            if ($transactionId) {
+                // Simpan data array wahana ke dalam tabel selected_transaction menggunakan model
+                $selectedTransactionModel = new SelectedTransactionModel();
+                $selectedTransactionData = [];
                 foreach ($wahanas as $wahana) {
-                    $existingBalance = $balanceModel->where('tiket', $rfidtiket)
-                                                    ->where('wahana_id', $wahana['item_id'])
-                                                    ->first();
-                
-                    if ($existingBalance) {
-                        // Jika data sudah ada, update jumlah dengan menambahkan jumlah lama dan baru
-                        $existingAmount = $existingBalance['amount'];
-                        $newAmount = $existingAmount + $wahana['jumlah'];
-                
-                        $balanceModel->update($existingBalance['id'], ['amount' => $newAmount]);
-                    } else {
-                        // Jika data belum ada, tambahkan data baru
-                        $balanceData[] = [
-                            'tiket' => $rfidtiket,
-                            'wahana_id' => $wahana['item_id'],
-                            'amount' => $wahana['jumlah']
-                        ];
-                    }
+                    $selectedTransactionData[] = [
+                        'transaction_id' => $transactionId,
+                        'tiket' => $rfid,
+                        'wahana_id' => $wahana['item_id'],
+                        'amount' => $wahana['jumlah']
+                    ];
                 }
-                
-                // Insert batch untuk data baru yang belum ada
-                if (!empty($balanceData)) {
-                    $saved = $balanceModel->insertBatch($balanceData);
-                
-                    if ($saved) {
-                        return $this->response->setJSON(['status' => 'success', 'message' => 'Transaksi berhasil disimpan']);
-                    } else {
-                        return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan data saldo']);
+
+                $savedSelected = $selectedTransactionModel->insertBatch($selectedTransactionData);
+
+                if ($savedSelected) {
+                    $balanceModel = new BalanceModel();
+                    $balanceData = [];
+
+                    foreach ($wahanas as $wahana) {
+                        $existingBalance = $balanceModel->where('tiket', $rfid)
+                            ->where('wahana_id', $wahana['item_id'])
+                            ->first();
+
+                        if ($existingBalance) {
+                            // Jika data sudah ada, update jumlah dengan menambahkan jumlah lama dan baru
+                            $existingAmount = $existingBalance['amount'];
+                            $newAmount = $existingAmount + $wahana['jumlah'];
+
+                            $balanceModel->update($existingBalance['id'], ['amount' => $newAmount]);
+                        } else {
+                            // Jika data belum ada, tambahkan data baru
+                            $balanceData[] = [
+                                'tiket' => $rfid,
+                                'wahana_id' => $wahana['item_id'],
+                                'amount' => $wahana['jumlah']
+                            ];
+                        }
+                    }
+
+                    // Insert batch untuk data baru yang belum ada
+                    if (!empty($balanceData)) {
+                        $saved = $balanceModel->insertBatch($balanceData);
+
+                        if (!$saved) {
+                            // Jika gagal menyimpan data saldo, tambahkan pesan error
+                            return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan data saldo']);
+                        }
                     }
                 } else {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Transaksi berhasil disimpan']);
+                    // Jika terjadi kesalahan saat menyimpan data, kirim respon gagal
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan data wahana yang dipilih']);
                 }
-                
+
+                $transactionIdArray[] = $transactionId; // Tambahkan ID transaksi ke dalam array
             } else {
-                // Jika terjadi kesalahan saat menyimpan data, kirim respon gagal
-                return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan data wahana yang dipilih']);
+                // Jika terjadi kesalahan saat menyimpan transaksi, kirim respon gagal
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan transaksi']);
             }
-        } else {
-            // Jika terjadi kesalahan saat menyimpan transaksi, kirim respon gagal
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Gagal menyimpan transaksi']);
         }
+
+        return $this->response->setJSON(['status' => 'success', 'message' => 'Transaksi berhasil disimpan', 'transaction_ids' => $transactionIdArray]);
     }
+
 
 }

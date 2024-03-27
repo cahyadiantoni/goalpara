@@ -386,7 +386,8 @@
   }
 
   function submitThis() {
-    var rfidtiket = $('#rfidtiket').val(); // Ambil nilai dari textarea
+    var tiket = $('#rfidtiket').val(); // Ambil nilai dari textarea
+    var rfidtiket = tiket.split(/[\s,]+/);
     var totalBayar = $('#totalHarga').text(); // Ambil total bayar dari div totalHarga
     var paymentType = $('#paymentType').val(); // Ambil jenis pembayaran dari select paymentType
     var refno = $('#refno').val(); // Ambil nomor referensi dari input refno
