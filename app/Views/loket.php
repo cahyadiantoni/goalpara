@@ -277,6 +277,8 @@
 
         // Menambahkan div chip QR beserta tombol hapus ke dalam kontainer
         document.getElementById("qrCodesContainer").appendChild(qrDiv);
+
+        RefreshTotal();
       }
     });
   }
@@ -288,6 +290,8 @@
     if (inputText.trim() && inputText.charAt(inputText.length - 1) !== ",") {
       document.getElementById("rfidtiket").value += ",";
     }
+
+    RefreshTotal();
   }
 
   function addWahanaThis(tiket_id, nama, harga, kategori, kapasitas) {
@@ -378,7 +382,10 @@
       var item_id = $(this).attr('id').split('_')[1];
       var harga = $('#aharga_' + item_id).text();
       var jumlah = $('#counting_' + item_id).text();
-      totalBayar += parseInt(harga) * parseInt(jumlah);
+      var tiket = $('#rfidtiket').val();
+      var rfidtiket = tiket.split(/[\s,]+/);
+      var jumlahTiket = rfidtiket.length;
+      totalBayar += parseInt(harga) * parseInt(jumlah) * parseInt(jumlahTiket);
     });
 
     $('#ttlThis').text(parseFloat(totalBayar).toLocaleString('id-ID'));
