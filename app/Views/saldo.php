@@ -56,6 +56,10 @@
 <script>
   function cekSaldo() {
     let rfidtiketValue = document.getElementById('rfidtiket').value;
+
+    let tableBody = document.querySelector('#saldoTable tbody');
+    tableBody.innerHTML = '';
+    
     fetch('<?= base_url('cek_saldo') ?>', {
       method: 'POST',
       headers: {
