@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2024 at 03:14 PM
+-- Generation Time: Apr 04, 2024 at 04:46 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.20
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `balance` (
   `id` bigint(250) NOT NULL,
-  `tiket` int(250) NOT NULL,
+  `tiket` varchar(250) NOT NULL,
   `wahana_id` int(250) NOT NULL,
   `amount` int(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -39,16 +39,22 @@ CREATE TABLE `balance` (
 --
 
 INSERT INTO `balance` (`id`, `tiket`, `wahana_id`, `amount`) VALUES
-(46, 123, 1, 1),
-(47, 123, 3, 1),
-(48, 123, 5, 1),
-(49, 123, 4, 3),
-(50, 123, 6, 1),
-(51, 123, 18, 1000),
-(52, 123, 9, 2),
-(53, 123, 12, 2),
-(54, 123, 15, 2),
-(55, 123, 17, 2);
+(46, '123', 1, 2),
+(47, '123', 3, 2),
+(48, '123', 5, 1),
+(49, '123', 4, 3),
+(50, '123', 6, 1),
+(51, '123', 18, 1000),
+(52, '123', 9, 2),
+(53, '123', 12, 2),
+(54, '123', 15, 2),
+(55, '123', 17, 2),
+(56, '234', 1, 1),
+(57, '234', 3, 1),
+(58, '567', 1, 1),
+(59, '567', 3, 1),
+(60, '890', 1, 1),
+(61, '890', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -91,7 +97,7 @@ INSERT INTO `gate` (`id`, `name`, `code`, `status`) VALUES
 
 CREATE TABLE `rfid` (
   `id` int(50) NOT NULL,
-  `uid` int(50) NOT NULL,
+  `uid` varchar(250) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `bagian` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -106,7 +112,7 @@ CREATE TABLE `riwayat_wahana` (
   `id` int(50) NOT NULL,
   `gate_id` int(50) NOT NULL,
   `wahana_id` int(50) NOT NULL,
-  `tiket` varchar(50) NOT NULL,
+  `tiket` varchar(250) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -126,7 +132,11 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`id`, `name`) VALUES
-(1, 'Admin');
+(1, 'Admin'),
+(2, 'Office'),
+(3, 'Staff'),
+(4, 'Wahana'),
+(5, 'Booth');
 
 -- --------------------------------------------------------
 
@@ -137,7 +147,7 @@ INSERT INTO `role` (`id`, `name`) VALUES
 CREATE TABLE `selected_transaction` (
   `id` bigint(250) NOT NULL,
   `transaction_id` int(50) NOT NULL,
-  `tiket` int(50) NOT NULL,
+  `tiket` varchar(250) NOT NULL,
   `wahana_id` int(250) NOT NULL,
   `amount` int(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -147,16 +157,24 @@ CREATE TABLE `selected_transaction` (
 --
 
 INSERT INTO `selected_transaction` (`id`, `transaction_id`, `tiket`, `wahana_id`, `amount`) VALUES
-(98, 48, 123, 1, 1),
-(99, 48, 123, 3, 1),
-(100, 48, 123, 5, 1),
-(101, 48, 123, 4, 3),
-(102, 48, 123, 6, 1),
-(103, 48, 123, 18, 1000),
-(104, 48, 123, 9, 2),
-(105, 48, 123, 12, 2),
-(106, 48, 123, 15, 2),
-(107, 48, 123, 17, 2);
+(98, 48, '123', 1, 1),
+(99, 48, '123', 3, 1),
+(100, 48, '123', 5, 1),
+(101, 48, '123', 4, 3),
+(102, 48, '123', 6, 1),
+(103, 48, '123', 18, 1000),
+(104, 48, '123', 9, 2),
+(105, 48, '123', 12, 2),
+(106, 48, '123', 15, 2),
+(107, 48, '123', 17, 2),
+(108, 49, '123', 1, 1),
+(109, 49, '123', 3, 1),
+(110, 50, '234', 1, 1),
+(111, 50, '234', 3, 1),
+(112, 51, '567', 1, 1),
+(113, 51, '567', 3, 1),
+(114, 52, '890', 1, 1),
+(115, 52, '890', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -166,7 +184,7 @@ INSERT INTO `selected_transaction` (`id`, `transaction_id`, `tiket`, `wahana_id`
 
 CREATE TABLE `transaction` (
   `id` bigint(250) NOT NULL,
-  `tiket` int(50) NOT NULL,
+  `tiket` varchar(250) NOT NULL,
   `total` int(250) NOT NULL,
   `payment_type` varchar(250) NOT NULL,
   `ref_number` varchar(250) NOT NULL,
@@ -180,7 +198,11 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`id`, `tiket`, `total`, `payment_type`, `ref_number`, `phone`, `created_at`, `updated_at`) VALUES
-(48, 123, 470000, 'Tunai', '123', '123', '2024-03-26 15:13:32', '2024-03-26 15:13:32');
+(48, '123', 470000, 'Tunai', '123', '123', '2024-03-26 15:13:32', '2024-03-26 15:13:32'),
+(49, '123', 40000, 'Tunai', '1234', '1234', '2024-03-27 13:37:09', '2024-03-27 13:37:09'),
+(50, '234', 40000, 'Tunai', '234567890', '234567890', '2024-03-27 13:59:22', '2024-03-27 13:59:22'),
+(51, '567', 40000, 'Tunai', '234567890', '234567890', '2024-03-27 13:59:22', '2024-03-27 13:59:22'),
+(52, '890', 40000, 'Tunai', '234567890', '234567890', '2024-03-27 13:59:22', '2024-03-27 13:59:22');
 
 -- --------------------------------------------------------
 
@@ -201,7 +223,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `role_id`) VALUES
-(1, 'Administrator', 'admin', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 1);
+(1, 'Administrator', 'admin', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 1),
+(2, 'Office', 'office', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 2),
+(3, 'Staff', 'staff', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 3),
+(4, 'Wahana', 'wahana', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 4),
+(5, 'Booth', 'booth', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 5);
 
 -- --------------------------------------------------------
 
@@ -313,7 +339,7 @@ ALTER TABLE `wahana`
 -- AUTO_INCREMENT for table `balance`
 --
 ALTER TABLE `balance`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `gate`
@@ -337,25 +363,25 @@ ALTER TABLE `riwayat_wahana`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `selected_transaction`
 --
 ALTER TABLE `selected_transaction`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(250) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `wahana`

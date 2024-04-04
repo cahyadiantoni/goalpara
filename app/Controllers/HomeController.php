@@ -17,6 +17,7 @@ class HomeController extends BaseController
         // Get user data from session
         $data['name'] = session()->get('name');
         $data['username'] = session()->get('username');
+        $data['role_id'] = session()->get('role_id');
 
         // Load view for home page with user data
         return view('home', $data);
