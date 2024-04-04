@@ -21,11 +21,12 @@
               <!-- <div style="font-size: 14px; color: #fff; padding: 15px 10px 0px">QR Number - Qty : <span id="rfQty" style="font-size: 18px; font-weight: bold"></span></div> -->
               <textarea id="rfidtiket" oninput="handleInput()" onfocusout="lostFocus()" style=" font-family: Poppins; width: 100%; color: #43A1A7; font-size: 18px; font-weight: bold; padding: 0px 10px 15px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word"></textarea>
               <div id="qrCodesContainer" style="display: flex; flex-wrap: wrap; color: #43A1A7;"></div>
+              <input type="hidden" id="hiddenVal" value="0">
               <!--<textarea id="rfidtiket" style="backgroud-color: #fff width:100%;color:#fff;font-size:14px;font-weight:bold;padding:0px 10px 15px;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;"></textarea>-->
             </div>
             <div class="" style="margin: 10px auto; width: 15%; background-color: #F5F5F5; text-align: center; color: #fff; border-radius: 10px; border: 2px solid #B5B5B5;">
               <div style="font-size: 22px; color: #43A1A7; padding: 15px 10px 0px; font-family: Poppins;">QR QTY</div>
-              <div style="font-size: 32px; color: #43A1A7; font-family: Poppins;"><span id="rfQty" style="font-size:32px; font-weight: bold"></span></div>
+              <div style="font-size: 32px; color: #43A1A7; font-family: Poppins;"><span id="rfidQty" style="font-size:32px; font-weight: bold"></span></div>
 
               <!--<textarea id="rfidtiket" style="backgroud-color: #fff width:100%;color:#fff;font-size:14px;font-weight:bold;padding:0px 10px 15px;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;"></textarea>-->
             </div>
@@ -223,66 +224,76 @@
 
 <script>
   function handleInput() {
-    // Mendapatkan nilai dari textarea
-    var inputText = document.getElementById("rfidtiket").value;
+      var inputText = document.getElementById("rfidtiket").value;
 
-    // Memisahkan teks menjadi potongan kode QR menggunakan koma atau spasi sebagai pemisah
-    var qrCodes = inputText.split(/[\s,]+/);
+      // Memisahkan teks menjadi potongan kode QR menggunakan koma atau spasi sebagai pemisah
+      var qrCodes = inputText.split(/[\s,]+/);
 
-    // Membersihkan kontainer sebelum menambahkan QR codes baru
-    document.getElementById("qrCodesContainer").innerHTML = '';
+      // Membersihkan kontainer sebelum menambahkan QR codes baru
+      document.getElementById("qrCodesContainer").innerHTML = '';
 
-    // Membuat dan menambahkan div untuk setiap potongan kode QR
-    qrCodes.forEach(qrCode => {
-      // Menghilangkan spasi awal dan akhir dari potongan kode QR
-      qrCode = qrCode.trim();
+      var counter = 0;
 
-      // Membuat div untuk chip QR
-      if (qrCode) {
-        var qrDiv = document.createElement("div");
-        qrDiv.textContent = qrCode;
-        qrDiv.style.margin = "5px";
-        qrDiv.style.padding = "7px";
-        qrDiv.style.paddingRight = "14px";
-        qrDiv.style.paddingLeft = "14px";
-        qrDiv.style.border = "1px solid #43A1A7";
-        qrDiv.style.borderRadius = "5px";
-        qrDiv.style.background = "#5CBBC1";
-        qrDiv.style.color = "#fff";
-        qrDiv.style.borderRadius = "16px";
-        qrDiv.style.fontSize = "16px";
+      // Membuat dan menambahkan div untuk setiap potongan kode QR
+      qrCodes.forEach(qrCode => {
+          // Menghilangkan spasi awal dan akhir dari potongan kode QR
+          qrCode = qrCode.trim();
 
+          // Membuat div untuk chip QR jika qrCode tidak kosong
+          if (qrCode) {
+              var qrDiv = document.createElement("div");
+              qrDiv.textContent = qrCode;
+              qrDiv.style.margin = "5px";
+              qrDiv.style.padding = "7px";
+              qrDiv.style.paddingRight = "14px";
+              qrDiv.style.paddingLeft = "14px";
+              qrDiv.style.border = "1px solid #43A1A7";
+              qrDiv.style.borderRadius = "5px";
+              qrDiv.style.background = "#5CBBC1";
+              qrDiv.style.color = "#fff";
+              qrDiv.style.borderRadius = "16px";
+              qrDiv.style.fontSize = "16px";
 
-        // Membuat tombol hapus untuk setiap chip QR
-        var deleteButton = document.createElement("button");
-        deleteButton.textContent = "x";
-        deleteButton.style.backgroundColor = "#f44336";
-        deleteButton.style.color = "#fff";
-        deleteButton.style.border = "none";
-        deleteButton.style.borderRadius = "50%";
-        deleteButton.style.cursor = "pointer";
-        deleteButton.style.marginLeft = "5px";
-        deleteButton.onclick = function() {
-          // Menghapus chip QR beserta karakter di dalamnya
-          qrDiv.remove();
-          // Mendapatkan nilai dari textarea dan menghapus kode QR yang sesuai dengan tombol hapus yang ditekan
-          var updatedText = document.getElementById("rfidtiket").value.replace(qrCode, '').trim();
-          document.getElementById("rfidtiket").value = updatedText;
-          // Memanggil kembali handleInput() untuk memperbarui tampilan chip QR
-          handleInput();
-        };
+              // Membuat tombol hapus untuk setiap chip QR
+              var deleteButton = document.createElement("button");
+              deleteButton.textContent = "x";
+              deleteButton.style.backgroundColor = "#f44336";
+              deleteButton.style.color = "#fff";
+              deleteButton.style.border = "none";
+              deleteButton.style.borderRadius = "50%";
+              deleteButton.style.cursor = "pointer";
+              deleteButton.style.marginLeft = "5px";
+              deleteButton.onclick = function() {
+                  // Menghapus chip QR beserta karakter di dalamnya
+                  qrDiv.remove();
+                  // Mendapatkan nilai dari textarea dan menghapus kode QR yang sesuai dengan tombol hapus yang ditekan
+                  var updatedText = document.getElementById("rfidtiket").value.replace(qrCode, '').trim();
+                  document.getElementById("rfidtiket").value = updatedText;
+                  // Memanggil kembali handleInput() untuk memperbarui tampilan chip QR
+                  handleInput();
+              };
 
-        // Menambahkan tombol hapus ke dalam div chip QR
-        qrDiv.appendChild(deleteButton);
+              // Menambahkan tombol hapus ke dalam div chip QR
+              qrDiv.appendChild(deleteButton);
 
-        // Menambahkan div chip QR beserta tombol hapus ke dalam kontainer
-        document.getElementById("qrCodesContainer").appendChild(qrDiv);
+              // Menambahkan div chip QR beserta tombol hapus ke dalam kontainer
+              document.getElementById("qrCodesContainer").appendChild(qrDiv);
 
-        RefreshTotal();
-      }
-    });
+              counter++;
+          }
+      });
+
+      document.getElementById("hiddenVal").value = counter;
+
+      // Mendapatkan nilai dari input tersembunyi (hiddenVal)
+      var hiddenVal = document.getElementById("hiddenVal").value;
+
+      // Mengubah isi dari elemen dengan ID "rfQty" sesuai dengan nilai hiddenVal
+      document.getElementById("rfidQty").textContent = hiddenVal;
+
+      RefreshTotal();
   }
-
+  
 
   function lostFocus() {
     // Menambahkan pemisah terakhir jika tidak ada spasi terakhir pada textarea
@@ -382,9 +393,7 @@
       var item_id = $(this).attr('id').split('_')[1];
       var harga = $('#aharga_' + item_id).text();
       var jumlah = $('#counting_' + item_id).text();
-      var tiket = $('#rfidtiket').val();
-      var rfidtiket = tiket.split(/[\s,]+/);
-      var jumlahTiket = rfidtiket.length;
+      var jumlahTiket = $('#hiddenVal').val();
       totalBayar += parseInt(harga) * parseInt(jumlah) * parseInt(jumlahTiket);
     });
 
@@ -454,11 +463,13 @@
 
 <script type="text/javascript">
   let scanner = new Instascan.Scanner({ video: document.getElementById('preview0') });
+  let scannedContent = ''; // Variabel untuk menyimpan semua hasil pemindaian dengan spasi di antara mereka
   scanner.addListener('scan', function (content) {
-    document.getElementById('rfidtiket').innerHTML = content;
-    // cekSaldo();
+    scannedContent += content + ' '; // Tambahkan spasi di sini
+    document.getElementById('rfidtiket').innerHTML = scannedContent;
+    handleInput();
     currentQR = content;
-    console.log(content);
+    console.log(scannedContent);
   });
   Instascan.Camera.getCameras().then(function (cameras) {
     if (cameras.length > 0) {
