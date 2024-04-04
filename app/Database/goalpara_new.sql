@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2024 at 04:46 AM
+-- Generation Time: Apr 04, 2024 at 02:21 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.20
 
@@ -136,7 +136,8 @@ INSERT INTO `role` (`id`, `name`) VALUES
 (2, 'Office'),
 (3, 'Staff'),
 (4, 'Wahana'),
-(5, 'Booth');
+(5, 'Booth'),
+(6, 'Zoo');
 
 -- --------------------------------------------------------
 
@@ -227,7 +228,8 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `role_id`) VALUES
 (2, 'Office', 'office', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 2),
 (3, 'Staff', 'staff', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 3),
 (4, 'Wahana', 'wahana', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 4),
-(5, 'Booth', 'booth', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 5);
+(5, 'Booth', 'booth', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 5),
+(6, 'Zoo', 'zoo', '$2y$10$Fc1gDg0ZDsPPavaSQp6RjO6p177tGukBTTxrqZnH.YId5.ecfcqtS', 6);
 
 -- --------------------------------------------------------
 

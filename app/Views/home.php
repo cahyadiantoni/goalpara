@@ -54,7 +54,7 @@
       </div>
     </a>
     <?php endif; ?>
-    <?php if ($role_id == 1 || $role_id == 3 || $role_id == 4 || $role_id == 5): ?>
+    <?php if ($role_id == 1 || $role_id == 3 || $role_id == 4 || $role_id == 5 || $role_id == 6): ?>
     <a href="<?= base_url('saldo') ?>">
       <div class="Group5" style="width: 143.62px; height: 132.49px; left: 872.08px; top: 142.86px; position: absolute">
         <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
@@ -78,7 +78,7 @@
       <img class="Logout" style="width: 43.26px; height: 39.91px; left: 1017.43px; top: 29.53px; position: absolute" src="<?= base_url() ?>assets/img/ic_logout.png" />
     </a>
     
-    <?php if ($role_id == 1 || $role_id == 3): ?>
+    <?php if ($role_id == 1 || $role_id == 6): ?>
     <a href="<?= base_url('minizoo') ?>">
     <div class="Group4" style="width: 143.62px; height: 132.49px; left: 610.80px; top: 142.86px; position: absolute">
       <div class="Rectangle4" style="width: 143.62px; height: 132.49px; left: 0px; top: 0px; position: absolute; background: white; box-shadow: 1px 3px 8.600000381469727px rgba(0, 0, 0, 0.35); border-radius: 25px"></div>
