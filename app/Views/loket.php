@@ -51,11 +51,15 @@
               if ($wahana['id'] == 1 || $wahana['id'] == 3) {
             ?>
                 <div class="item" id="item_<?= $wahana['id'] ?>">
-                  <div id="aharga_<?= $wahana['id'] ?>" style="display:none;"><?= $wahana['harga'] ?></div>
                   <div id="kapasitas_<?= $wahana['id'] ?>" style="display:none;"><?= $wahana['kapasitas'] ?></div>
                   <h2 style="justify-content: center;">
                     <i class="material-icons" style="font-size: 28px; margin-right: 10px; color: #333">cancel</i><span style="vertical-align: top; heigh: 20px; padding-top: 5px; font-size: 18px; font-family: Poppins;"><?= $wahana['name'] ?> - <span id="kategori"><?= $wahana['kategori']; ?></span> - <span id="kapasitas"><?= $wahana['kapasitas']; ?></span> orang - <span id="hargaTkt"><?= number_format($wahana['harga'], 0, ',', '.'); ?></span></span>
                   </h2>
+                  <label for="diskon">Diskon (%) :</label>
+                  <input type="number" value="0" onchange="hargadiskon(this)" id="diskon_<?= $wahana['id'] ?>">
+                  <label for="diskon">Hasil :</label>
+                  <input type="hidden" readonly value="<?= $wahana['harga'] ?>" id="hargaawal_<?= $wahana['id'] ?>">
+                  <input type="number" readonly value="<?= $wahana['harga'] ?>" id="aharga_<?= $wahana['id'] ?>">
                   <div class="right" style="width: 100px">
                     <button onclick="decrement()"><i class="material-icons" style="font-size: 32px; margin-left: -12px; color: #43A1A7;">add_circle</i></button>
                     <h2 id="counting_<?= $wahana['id'] ?>" style="min-height: 20px; font-size: 14px; min-width: 25px; text-align: center">1</h2>
@@ -307,7 +311,6 @@
 
   function addWahanaThis(tiket_id, nama, harga, kategori, kapasitas) {
     var cst = '<div class="item" id="item_' + tiket_id + '">';
-    cst += '<div id="aharga_' + tiket_id + '" style="display:none;">' + harga + '</div>';
     cst += '';
     cst += '<h2 style="font-size:14px;"><i onclick="removeWahanaThis(' + "'" + 'item_' + tiket_id + "','" + tiket_id + "'" + ');" class="material-icons" style="font-size:28px;margin-right:10px;color:red;">cancel</i><span id="ket_' + tiket_id + '" style="vertical-align: top;heigh:20px;padding-top:5px;font-size: 18px; font-family: Poppins;">' + nama + '</span>';
     cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;"> - </span>';
@@ -316,6 +319,11 @@
     cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;" id="kapasitas_' + tiket_id + '" >' + kapasitas + '</span>';
     cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;"> orang - </span>';
     cst += '<span style="vertical-align: top;padding-top:5px;heigh:20px; font-size: 18px; font-family: Poppins;" id="harga_' + tiket_id + '" >' + parseFloat(harga).toLocaleString('id-ID') + '</span></h2>';
+    cst += '<label for="diskon">Diskon (%) :</label>';
+    cst += '<input type="number" value="0" onchange="hargadiskon(this)" id="diskon_' + tiket_id + '">';
+    cst += '<label for="diskon">Hasil :</label>';
+    cst += '<input type="hidden" readonly value="' + harga + '" id="hargaawal_' + tiket_id + '">';
+    cst += '<input type="number" readonly value="' + harga + '" id="aharga_' + tiket_id + '">';
     cst += '<div class="right" style="width:100px;">';
     cst += '<button onclick="decrementThis(' + "'" + tiket_id + "'" + ')" ><i class="material-icons" style="font-size:32px;margin-left:-12px; color: #43A1A7;">add_circle</i></button>';
     cst += '<h2 id="counting_' + tiket_id + '" style="min-height:20px;font-size:14px;min-width:25px;text-align:center;">1</h2>';
@@ -332,6 +340,17 @@
 
     RefreshTotal();
   }
+
+  function hargadiskon(elem) {
+    var tiket_id = $(elem).attr('id').split('_')[1];
+    var diskon = parseInt($(elem).val());
+    var hargaAwal = parseInt($('#hargaawal_' + tiket_id).val());
+    var aharga = (100 - diskon) * hargaAwal / 100;
+
+    $('#aharga_' + tiket_id).val(aharga);
+}
+
+
 
   function incrementThis(tiket_id) {
     var countingElement = document.getElementById('counting_' + tiket_id);
@@ -354,7 +373,7 @@
   function removeWahanaThis(item_id, tiket_id) {
     // Kembalikan item ke dalam tabel modal
     var nama = document.getElementById('ket_' + tiket_id).innerText;
-    var harga = document.getElementById('aharga_' + tiket_id).innerText;
+    var harga = document.getElementById('hargaawal_' + tiket_id).value;
     var kategori = document.getElementById('kategori_' + tiket_id).innerText;
     var kapasitas = document.getElementById('kapasitas_' + tiket_id).innerText;
 
@@ -366,7 +385,7 @@
       <td class="align-middle text-center">${kapasitas}</td>
       <td class="align-middle text-center">${harga}</td>
       <td class="align-middle text-center">
-        <button onclick="addWahanaThis('${tiket_id}', '${nama}', '${harga}');" class="btn btn-primary">Pilih</button>
+        <button onclick="addWahanaThis('${tiket_id}', '${nama}', '${harga}', '${kategori}', '${kapasitas}');" class="btn btn-primary">Pilih</button>
       </td>
     `;
 
@@ -391,7 +410,7 @@
     var totalBayar = 0;
     $('.item').each(function() {
       var item_id = $(this).attr('id').split('_')[1];
-      var harga = $('#aharga_' + item_id).text();
+      var harga = $('#aharga_' + item_id).val();
       var jumlah = $('#counting_' + item_id).text();
       var jumlahTiket = $('#hiddenVal').val();
       totalBayar += parseInt(harga) * parseInt(jumlah) * parseInt(jumlahTiket);
@@ -412,7 +431,7 @@
     var wahana = [];
     $('.item').each(function() {
       var item_id = $(this).attr('id').split('_')[1];
-      var harga = $('#aharga_' + item_id).text();
+      var harga = $('#aharga_' + item_id).val();
       var banyak = parseInt($('#counting_' + item_id).text());
       var kapasitas = parseInt($('#kapasitas_' + item_id).text());
       var jumlah = banyak * kapasitas;
