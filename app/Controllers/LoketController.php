@@ -68,7 +68,7 @@ class LoketController extends BaseController
                         'transaction_id' => $transactionId,
                         'tiket' => $rfid,
                         'wahana_id' => $wahana['item_id'],
-                        'amount' => $wahana['jumlah']
+                        'amount' => $wahana['banyak']
                     ];
                 }
 

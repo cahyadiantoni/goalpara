@@ -438,6 +438,7 @@
       wahana.push({
         item_id: item_id,
         harga: harga,
+        banyak: banyak,
         jumlah: jumlah
       });
     });
