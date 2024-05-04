@@ -18,18 +18,31 @@
           <div class="" style="justify-content: center; padding: 20px; margin: 20px; background-color: #F5F5F5; text-align: center; color: #fff; border-radius: 10px; border: 2px solid #B5B5B5;">
             <div style="display: flex; flex-direction: row; justify-content: center;">
             <table class="table" id="saldoTable">
-                <thead>
-                    <tr>
-                    <th class="text-center" style="font-family: Poppins;">Jumlah Tiket</th>
-                    <th class="text-center" style="font-family: Poppins;">Harga Satuan</th>
-                    <th class="text-center" style="font-family: Poppins;">Total</th>
-                    <th class="text-center" style="font-family: Poppins;">Revenue</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-                </table>
+              <thead>
+                  <tr>
+                      <th class="text-center" style="font-family: Poppins;">Nama Wahana</th>
+                      <th class="text-center" style="font-family: Poppins;">Jumlah Tiket</th>
+                      <th class="text-center" style="font-family: Poppins;">Harga Satuan</th>
+                      <th class="text-center" style="font-family: Poppins;">Total</th>
+                      <th class="text-center" style="font-family: Poppins;">Total Revenue</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <?php
+                  foreach($combinedData as $data):
+                  ?>
+                  <tr>
+                      <td class="text-center"><?= $data['wahana_name'] ?></td>
+                      <td class="text-center"><?= $data['jumlah_tiket'] ?></td>
+                      <td class="text-center">Rp <?= number_format($data['harga'], 0, ',', '.') ?></td>
+                      <td class="text-center">Rp <?= number_format($data['total'], 0, ',', '.') ?></td>
+                      <td class="text-center">Rp <?= number_format($totalRevenue, 0, ',', '.') ?></td>
+                  </tr>
+                <?php
+                  endforeach;
+                ?>
+              </tbody>
+            </table>
             </div>
           </div>
         </div>
